@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         console.log("Initializing site...");
 
-        const response = await fetch("data.json");
+        const response = await fetch("data.json", { cache: "force-cache" });
         if (!response.ok) throw new Error(`Failed to load data.json: ${response.statusText}`);
         const data = await response.json();
         console.log("Fetched data:", data);
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         productArray.forEach((product) => {
-            const imagePath = `images/${product.id}/01.jpg`; // Use 01.jpg for index
+            const imagePath = `images/${product.id}/01.jpg?v=1`; // Append query string for caching
             const tile = document.createElement("div");
             tile.classList.add("product-tile", "bg-white", "rounded-lg", "shadow-lg", "hover:shadow-xl", "transition-shadow", "p-4");
             tile.innerHTML = `
@@ -127,25 +127,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function populateGallery(productId) {
-        // Show a loading indicator
         gallery.innerHTML = `<div class="w-full h-64 flex items-center justify-center text-gray-500">
             <div class="loader border-t-4 border-pink-500 rounded-full w-8 h-8 animate-spin"></div>
             <p class="ml-4">Loading images...</p>
         </div>`;
 
         const folderPath = `images/${productId}/`;
-        galleryImages = []; // Reset gallery images
+        galleryImages = [];
         currentImageIndex = 0;
 
         for (let i = 1; i <= 100; i++) {
-            const imagePath = `${folderPath}${String(i).padStart(2, '0')}.jpg`;
+            const imagePath = `${folderPath}${String(i).padStart(2, '0')}.jpg?v=1`; // Append query string
             const exists = await checkImageExists(imagePath);
             if (exists) {
                 galleryImages.push(imagePath);
             }
         }
 
-        // Check if images exist and update the gallery
         if (galleryImages.length > 0) {
             updateGallery();
         } else {
@@ -172,7 +170,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             updateGallery();
         });
     }
-
 
     function checkImageExists(url) {
         return new Promise((resolve) => {
