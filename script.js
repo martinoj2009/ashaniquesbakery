@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const closeButton = document.getElementById("closeModal");
     const searchBar = document.getElementById("searchBar");
     const sortDropdown = document.getElementById("sortDropdown");
+    const socialLinksContainer = document.getElementById("social-links");
 
     let products = []; // Will hold the product data
     let filteredProducts = []; // Products after search/sort filtering
@@ -32,10 +33,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         const bakeryInfo = data.bakeryInfo;
         if (bakeryInfo) {
             document.getElementById("bakery-name").textContent = bakeryInfo.name || "Ashanique's Bakery";
-            const contactInfo = bakeryInfo.contact;
-            document.getElementById("contact-info").textContent = `
-                📞 ${contactInfo.phone || "No phone available"} | ✉️ ${contactInfo.email || "No email available"}
-            `;
+
+            // Populate social media links
+            const social = bakeryInfo.social || {};
+            if (social.instagram) {
+                addSocialLink(social.instagram, "Instagram");
+            }
+            if (social.facebook) {
+                addSocialLink(social.facebook, "Facebook");
+            }
         }
 
         console.log("Data loaded successfully:", products);
@@ -93,6 +99,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     } catch (error) {
         console.error("Error loading JSON or initializing site:", error);
+    }
+
+    // Function to add social media link
+    function addSocialLink(url, platform) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "text-pink-300 hover:text-white text-lg";
+        link.innerHTML = `<span>${platform}</span>`;
+        socialLinksContainer.appendChild(link);
     }
 
     // Function to render products

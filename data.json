@@ -5,6 +5,10 @@
         "phone": "",
         "email": "",
         "address": ""
+      },
+      "social": {
+          "instagram": "https://www.instagram.com/ashaniques_bakery/",
+          "facebook": ""
       }
     },
     "products": [
