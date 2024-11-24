@@ -29,20 +29,19 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         `;
         tile.addEventListener("click", () => {
-          console.log(`Opening modal for: ${product.name}`);
-          modalTitle.textContent = product.name;
-          modalDescription.textContent = product.description;
-          orderLink.href = product.orderLink;
-          modal.style.display = "block";
-
-        });
+            modalTitle.textContent = product.name;
+            modalDescription.textContent = product.description;
+            orderLink.href = product.orderLink;
+            document.getElementById("modal-image").src = product.image; // Set the modal image
+            modal.classList.remove("hidden");
+          });
         productList.appendChild(tile);
       });
   
       // Close modal
       closeButton.addEventListener("click", () => {
         console.log("Closing modal");
-        modal.classList.add("hidden");
+        modal.style.display = "hidden";
       });
     } catch (error) {
       console.error("Error loading JSON or initializing site:", error);
