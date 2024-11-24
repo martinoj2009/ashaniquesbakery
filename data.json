@@ -1,28 +1,20 @@
 {
     "bakeryInfo": {
-      "name": "Sweet Delights",
+      "name": "Ashanique's Bakery",
       "contact": {
-        "phone": "123-456-7890",
-        "email": "orders@sweetdelights.com",
-        "address": "123 Dessert Lane, Caketown"
+        "phone": "",
+        "email": "",
+        "address": ""
       }
     },
     "products": [
       {
         "id": 1,
-        "name": "Chocolate Cake",
+        "name": "Cupcakes",
         "price": "$25",
-        "image": "images/chocolate-cake.jpg",
+        "image": "images/cupcakes.jpg",
         "description": "A rich and moist chocolate cake perfect for any occasion.",
         "orderLink": "https://orderlink.com/chocolate-cake"
-      },
-      {
-        "id": 2,
-        "name": "Lemon Tart",
-        "price": "$15",
-        "image": "images/lemon-tart.jpg",
-        "description": "Tangy and sweet, this lemon tart is a crowd-pleaser.",
-        "orderLink": "https://orderlink.com/lemon-tart"
       }
     ]
   }
