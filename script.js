@@ -65,6 +65,14 @@ document.addEventListener("DOMContentLoaded", async () => {
                 modal.classList.add("hidden");
             }
         });
+
+        // Add event listener for the "Order Now" button
+        orderLink.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default behavior
+            const orderUrl = orderLink.href;
+            console.log(`Opening order link: ${orderUrl}`);
+            window.open(orderUrl, '_blank'); // Open in a new window
+        });
     } catch (error) {
         console.error("Error loading JSON or initializing site:", error);
     }
