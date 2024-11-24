@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let products = [];
     let filteredProducts = [];
+    let galleryImages = [];
+    let currentImageIndex = 0;
 
     try {
         console.log("Initializing site...");
@@ -99,10 +101,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         productArray.forEach((product) => {
+            const imagePath = `images/${product.id}/01.jpg`; // Use 01.jpg for index
             const tile = document.createElement("div");
             tile.classList.add("product-tile", "bg-white", "rounded-lg", "shadow-lg", "hover:shadow-xl", "transition-shadow", "p-4");
             tile.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
+                <img src="${imagePath}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="product-info text-center mt-4">
                     <h3 class="text-lg font-semibold">${product.name}</h3>
                     <p class="text-pink-500 font-bold">${product.price}</p>
@@ -126,24 +129,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function populateGallery(productId) {
         gallery.innerHTML = ""; // Clear current gallery images
         const folderPath = `images/${productId}/`;
-        let imageFound = false;
+        galleryImages = []; // Reset gallery images
+        currentImageIndex = 0;
 
         for (let i = 1; i <= 100; i++) {
             const imagePath = `${folderPath}${String(i).padStart(2, '0')}.jpg`;
             const exists = await checkImageExists(imagePath);
             if (exists) {
-                const img = document.createElement("img");
-                img.src = imagePath;
-                img.alt = `Product Image ${i}`;
-                img.className = "w-24 h-24 object-cover rounded-lg shadow-sm";
-                gallery.appendChild(img);
-                imageFound = true;
+                galleryImages.push(imagePath);
             }
         }
 
-        if (!imageFound) {
+        if (galleryImages.length > 0) {
+            updateGallery();
+        } else {
             gallery.innerHTML = `<p class="text-gray-500">No additional images available.</p>`;
         }
+    }
+
+    function updateGallery() {
+        gallery.innerHTML = `
+            <div class="relative">
+                <button id="prevImage" class="absolute left-0 bg-gray-500 text-white px-2 py-1 rounded-lg">←</button>
+                <img src="${galleryImages[currentImageIndex]}" alt="Gallery Image" class="w-full h-64 object-cover rounded-lg">
+                <button id="nextImage" class="absolute right-0 bg-gray-500 text-white px-2 py-1 rounded-lg">→</button>
+            </div>
+        `;
+
+        document.getElementById("prevImage").addEventListener("click", () => {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateGallery();
+        });
+
+        document.getElementById("nextImage").addEventListener("click", () => {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            updateGallery();
+        });
     }
 
     function checkImageExists(url) {
