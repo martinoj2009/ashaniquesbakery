@@ -5,33 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashanique's Bakery</title>
-    <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="script.js"></script>
 </head>
 
-<body>
-    <header>
-        <h1 id="bakery-name">Ashanique's Bakery</h1>
-        <p id="contact-info"></p>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-pink-500 to-red-500 text-white py-10">
+        <div class="container mx-auto text-center">
+            <h1 id="bakery-name" class="text-4xl font-bold mb-4">Ashanique's Bakery</h1>
+            <p id="contact-info" class="text-lg">📞 Call us for orders | ✉️ ashanique@example.com</p>
+        </div>
     </header>
-    <main id="product-list"></main>
 
-    <!-- Modal (Hidden by default) -->
+    <!-- Product List -->
+    <main class="container mx-auto py-10 px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Our Delicious Creations</h2>
+        <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Products will be dynamically added here -->
+        </div>
+    </main>
+
+    <!-- Modal -->
     <div id="productModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg w-11/12 md:w-1/2 relative">
             <button id="closeModal"
                 class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-            <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
-            <img id="modalImage" src="" alt="Product Image" class="mb-4 max-h-64 mx-auto rounded-lg">
-            <p id="modalDescription" class="mb-4"></p>
-            <a id="orderLink" href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Order Now</a>
+            <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
+            <img id="modalImage" src="" alt="Product Image" class="mb-4 max-h-64 mx-auto rounded-lg shadow-md">
+            <p id="modalDescription" class="text-gray-700 mb-4"></p>
+            <a id="orderLink" href="#"
+                class="bg-gradient-to-r from-pink-500 to-red-500 text-white px-4 py-2 rounded hover:opacity-90">Order
+                Now</a>
         </div>
     </div>
-
-
-
-
-    <script src="script.js"></script>
 </body>
 
 </html>
