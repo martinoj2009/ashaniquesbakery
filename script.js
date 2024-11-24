@@ -131,25 +131,29 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div class="loader border-t-4 border-pink-500 rounded-full w-8 h-8 animate-spin"></div>
             <p class="ml-4">Loading images...</p>
         </div>`;
-
+    
         const folderPath = `images/${productId}/`;
         galleryImages = [];
         currentImageIndex = 0;
-
+    
         for (let i = 1; i <= 100; i++) {
-            const imagePath = `${folderPath}${String(i).padStart(2, '0')}.jpg?v=1`; // Append query string
+            const imagePath = `${folderPath}${String(i).padStart(2, '0')}.jpg?v=1`; // Append query string for caching
             const exists = await checkImageExists(imagePath);
             if (exists) {
                 galleryImages.push(imagePath);
+            } else {
+                console.log(`Image not found: ${imagePath}, stopping further checks.`);
+                break; // Stop fetching more images
             }
         }
-
+    
         if (galleryImages.length > 0) {
             updateGallery();
         } else {
             gallery.innerHTML = `<p class="text-gray-500 text-center">No additional images available.</p>`;
         }
     }
+    
 
     function updateGallery() {
         gallery.innerHTML = `
