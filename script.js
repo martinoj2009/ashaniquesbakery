@@ -127,7 +127,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function populateGallery(productId) {
-        gallery.innerHTML = ""; // Clear current gallery images
+        // Show a loading indicator
+        gallery.innerHTML = `<div class="w-full h-64 flex items-center justify-center text-gray-500">
+            <div class="loader border-t-4 border-pink-500 rounded-full w-8 h-8 animate-spin"></div>
+            <p class="ml-4">Loading images...</p>
+        </div>`;
+
         const folderPath = `images/${productId}/`;
         galleryImages = []; // Reset gallery images
         currentImageIndex = 0;
@@ -140,16 +145,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         }
 
+        // Check if images exist and update the gallery
         if (galleryImages.length > 0) {
             updateGallery();
         } else {
-            gallery.innerHTML = `<p class="text-gray-500">No additional images available.</p>`;
+            gallery.innerHTML = `<p class="text-gray-500 text-center">No additional images available.</p>`;
         }
     }
 
     function updateGallery() {
         gallery.innerHTML = `
-            <div class="relative">
+            <div class="relative flex items-center justify-center">
                 <button id="prevImage" class="absolute left-0 bg-gray-500 text-white px-2 py-1 rounded-lg">←</button>
                 <img src="${galleryImages[currentImageIndex]}" alt="Gallery Image" class="w-full h-64 object-cover rounded-lg">
                 <button id="nextImage" class="absolute right-0 bg-gray-500 text-white px-2 py-1 rounded-lg">→</button>
@@ -166,6 +172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             updateGallery();
         });
     }
+
 
     function checkImageExists(url) {
         return new Promise((resolve) => {

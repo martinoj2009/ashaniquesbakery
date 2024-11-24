@@ -2,23 +2,23 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-  }
-  
-  header {
+}
+
+header {
     text-align: center;
     background-color: #f8b400;
     color: white;
     padding: 1rem;
-  }
-  
-  #product-list {
+}
+
+#product-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1rem;
     padding: 1rem;
-  }
-  
-  .product-tile {
+}
+
+.product-tile {
     display: flex;
     align-items: center;
     background-color: #fff;
@@ -26,74 +26,77 @@ body {
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
-  }
-  
-  .product-tile img {
+}
+
+.product-tile img {
     border-radius: 50%;
     width: 80px;
     height: 80px;
     margin: 1rem;
-  }
-  
-  .product-info {
-    padding: 1rem;
-  }
-  
-  .hidden {
-    display: none;
-  }
+}
 
-  .modal {
-    display: none; /* Hidden by default */
+.product-info {
+    padding: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal {
+    display: none;
+    /* Hidden by default */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     background: white;
     padding: 1rem;
     border-radius: 8px;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    text-align: center; /* Center text content */
+    text-align: center;
+    /* Center text content */
     position: relative;
-  }
-  
-  .close-button {
+}
+
+.close-button {
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
     font-size: 1.5rem;
-  }
-  
-  .modal-content img {
+}
+
+.modal-content img {
     width: 100%;
     max-width: 400px;
     height: auto;
     border-radius: 8px;
     margin-bottom: 1rem;
-  }
-  
-  .modal-content h2 {
+}
+
+.modal-content h2 {
     margin: 0.5rem 0;
     font-size: 1.5rem;
-  }
-  
-  .modal-content p {
+}
+
+.modal-content p {
     font-size: 1rem;
     margin: 1rem 0;
-  }
-  
-  .order-button {
+}
+
+.order-button {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     background: #f8b400;
@@ -101,21 +104,40 @@ body {
     text-decoration: none;
     border-radius: 4px;
     font-weight: bold;
-  }
-  
-  .order-button:hover {
+}
+
+.order-button:hover {
     background: #d59c00;
-  }
-  
-  @media (max-width: 600px) {
+}
+
+@media (max-width: 600px) {
     .modal-content {
-      width: 95%;
-      max-width: 100%;
+        width: 95%;
+        max-width: 100%;
     }
-  
+
     .modal-content img {
-      max-width: 100%;
+        max-width: 100%;
     }
-  }
-  
-  
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    /* Light gray */
+    border-top: 4px solid #f06292;
+    /* Pink */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
