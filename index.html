@@ -16,16 +16,19 @@
     </header>
     <main id="product-list"></main>
 
-    <!-- Modal -->
+    <!-- Modal (Hidden by default) -->
     <div id="productModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg w-11/12 md:w-1/2">
-          <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">&times;</button>
-          <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
-          <img id="modalImage" src="" alt="Product Image" class="mb-4 max-h-64 mx-auto">
-          <p id="modalDescription" class="mb-4"></p>
-          <a id="orderLink" href="#" class="bg-blue-500 text-white px-4 py-2 rounded">Order Now</a>
+        <div class="bg-white p-6 rounded-lg w-11/12 md:w-1/2 relative">
+            <button id="closeModal"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
+            <h2 id="modalTitle" class="text-xl font-bold mb-2"></h2>
+            <img id="modalImage" src="" alt="Product Image" class="mb-4 max-h-64 mx-auto rounded-lg">
+            <p id="modalDescription" class="mb-4"></p>
+            <a id="orderLink" href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Order Now</a>
         </div>
-      </div>
+    </div>
+
+
 
 
     <script src="script.js"></script>

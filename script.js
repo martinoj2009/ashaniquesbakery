@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const productList = document.getElementById("product-list");
-    const modal = document.getElementById("product-modal");
-    const modalTitle = document.getElementById("modal-title");
-    const modalDescription = document.getElementById("modal-description");
-    const orderLink = document.getElementById("order-link");
-    const modalImage = document.getElementById("modal-image"); // Reference to the modal image
-    const closeButton = document.querySelector(".close-button");
+    const modal = document.getElementById("productModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const orderLink = document.getElementById("orderLink");
+    const modalImage = document.getElementById("modalImage"); // Modal image
+    const closeButton = document.getElementById("closeModal");
 
     try {
         console.log("Initializing site...");
@@ -37,23 +37,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             tile.addEventListener("click", () => {
                 console.log(`Opening modal for product: ${product.name}`);
-                document.getElementById("modalTitle").textContent = product.name;
-                document.getElementById("modalDescription").textContent = product.description;
-                document.getElementById("modalImage").src = product.image;
-                document.getElementById("orderLink").href = product.orderLink;
+                modalTitle.textContent = product.name;
+                modalDescription.textContent = product.description;
+                modalImage.src = product.image;
+                orderLink.href = product.orderLink;
 
                 // Show modal
-                document.getElementById("productModal").classList.remove("hidden");
+                modal.classList.remove("hidden");
             });
 
             productList.appendChild(tile);
         });
 
-        // Close modal
-        document.getElementById("closeModal").addEventListener("click", () => {
-            document.getElementById("productModal").classList.add("hidden");
+        // Close modal on "X" button
+        closeButton.addEventListener("click", () => {
+            console.log("Close button clicked.");
+            modal.classList.add("hidden");
         });
 
+        // Close modal on clicking outside modal content
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                console.log("Clicked outside modal content.");
+                modal.classList.add("hidden");
+            }
+        });
     } catch (error) {
         console.error("Error loading JSON or initializing site:", error);
     }
