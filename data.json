@@ -27,6 +27,14 @@
         "image": "images/applecrumble.jpg",
         "description": "A classic apple crumble with a rich and creamy cheese filling.",
         "orderLink": "https://square.link/u/FOdCo0c2"
+      },
+      {
+        "id": 3,
+        "name": "Apple Pie",
+        "price": "$25.00",
+        "image": "images/applepie.jpg",
+        "description": "A classic apple pie with a rich and creamy cheese filling.",
+        "orderLink": "https://square.link/u/FOdCo0c2"
       }
     ]
   }
