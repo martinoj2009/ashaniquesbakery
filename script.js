@@ -17,9 +17,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Fetch data from JSON
         const response = await fetch("data.json");
-        if (!response.ok) throw new Error("Failed to load data.json");
-        products = await response.json();
+        if (!response.ok) throw new Error(`Failed to load data.json: ${response.statusText}`);
+        const data = await response.json();
+        console.log("Fetched data:", data);
+
+        // Extract products and bakery info
+        if (!data.products || !Array.isArray(data.products)) {
+            throw new Error("Invalid products data in JSON.");
+        }
+        products = data.products; // Assign products array
         filteredProducts = [...products]; // Initialize filtered products
+
+        // Set bakery info
+        const bakeryInfo = data.bakeryInfo;
+        if (bakeryInfo) {
+            document.getElementById("bakery-name").textContent = bakeryInfo.name || "Ashanique's Bakery";
+            const contactInfo = bakeryInfo.contact;
+            document.getElementById("contact-info").textContent = `
+                📞 ${contactInfo.phone || "No phone available"} | ✉️ ${contactInfo.email || "No email available"}
+            `;
+        }
+
         console.log("Data loaded successfully:", products);
 
         // Render products initially
@@ -45,9 +63,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else if (sortValue === "name-desc") {
                 filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
             } else if (sortValue === "price-asc") {
-                filteredProducts.sort((a, b) => a.price - b.price);
+                filteredProducts.sort((a, b) => parseFloat(a.price.replace('$', '')) - parseFloat(b.price.replace('$', '')));
             } else if (sortValue === "price-desc") {
-                filteredProducts.sort((a, b) => b.price - a.price);
+                filteredProducts.sort((a, b) => parseFloat(b.price.replace('$', '')) - parseFloat(a.price.replace('$', '')));
             }
             renderProducts(filteredProducts);
         });
@@ -92,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="product-info text-center mt-4">
                     <h3 class="text-lg font-semibold">${product.name}</h3>
-                    <p class="text-pink-500 font-bold">$${product.price}</p>
+                    <p class="text-pink-500 font-bold">${product.price}</p>
                 </div>
             `;
 
