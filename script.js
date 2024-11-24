@@ -4,52 +4,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     const modalTitle = document.getElementById("modalTitle");
     const modalDescription = document.getElementById("modalDescription");
     const orderLink = document.getElementById("orderLink");
-    const modalImage = document.getElementById("modalImage");
+    const gallery = document.getElementById("gallery");
     const closeButton = document.getElementById("closeModal");
     const searchBar = document.getElementById("searchBar");
     const sortDropdown = document.getElementById("sortDropdown");
     const socialLinksContainer = document.getElementById("social-links");
 
-    let products = []; // Will hold the product data
-    let filteredProducts = []; // Products after search/sort filtering
+    let products = [];
+    let filteredProducts = [];
 
     try {
         console.log("Initializing site...");
 
-        // Fetch data from JSON
         const response = await fetch("data.json");
         if (!response.ok) throw new Error(`Failed to load data.json: ${response.statusText}`);
         const data = await response.json();
         console.log("Fetched data:", data);
 
-        // Extract products and bakery info
         if (!data.products || !Array.isArray(data.products)) {
             throw new Error("Invalid products data in JSON.");
         }
-        products = data.products; // Assign products array
-        filteredProducts = [...products]; // Initialize filtered products
+        products = data.products;
+        filteredProducts = [...products];
 
-        // Set bakery info
         const bakeryInfo = data.bakeryInfo;
         if (bakeryInfo) {
             document.getElementById("bakery-name").textContent = bakeryInfo.name || "Ashanique's Bakery";
-
-            // Populate social media links
             const social = bakeryInfo.social || {};
-            if (social.instagram) {
-                addSocialLink(social.instagram, "Instagram");
-            }
-            if (social.facebook) {
-                addSocialLink(social.facebook, "Facebook");
-            }
+            if (social.instagram) addSocialLink(social.instagram, "Instagram");
+            if (social.facebook) addSocialLink(social.facebook, "Facebook");
         }
 
         console.log("Data loaded successfully:", products);
 
-        // Render products initially
         renderProducts(filteredProducts);
 
-        // Search functionality
         searchBar.addEventListener("input", (e) => {
             const query = e.target.value.toLowerCase();
             console.log(`Searching for: ${query}`);
@@ -60,29 +49,21 @@ document.addEventListener("DOMContentLoaded", async () => {
             renderProducts(filteredProducts);
         });
 
-        // Sorting functionality
         sortDropdown.addEventListener("change", (e) => {
             const sortValue = e.target.value;
             console.log(`Sorting by: ${sortValue}`);
-            if (sortValue === "name-asc") {
-                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-            } else if (sortValue === "name-desc") {
-                filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
-            } else if (sortValue === "price-asc") {
-                filteredProducts.sort((a, b) => parseFloat(a.price.replace('$', '')) - parseFloat(b.price.replace('$', '')));
-            } else if (sortValue === "price-desc") {
-                filteredProducts.sort((a, b) => parseFloat(b.price.replace('$', '')) - parseFloat(a.price.replace('$', '')));
-            }
+            if (sortValue === "name-asc") filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+            else if (sortValue === "name-desc") filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+            else if (sortValue === "price-asc") filteredProducts.sort((a, b) => parseFloat(a.price.replace('$', '')) - parseFloat(b.price.replace('$', '')));
+            else if (sortValue === "price-desc") filteredProducts.sort((a, b) => parseFloat(b.price.replace('$', '')) - parseFloat(a.price.replace('$', '')));
             renderProducts(filteredProducts);
         });
 
-        // Close modal
         closeButton.addEventListener("click", () => {
             console.log("Close button clicked.");
             modal.classList.add("hidden");
         });
 
-        // Close modal on clicking outside modal content
         modal.addEventListener("click", (event) => {
             if (event.target === modal) {
                 console.log("Clicked outside modal content.");
@@ -90,18 +71,16 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
 
-        // Add event listener for the "Order Now" button
         orderLink.addEventListener("click", (event) => {
-            event.preventDefault(); // Prevent default behavior
+            event.preventDefault();
             const orderUrl = orderLink.href;
             console.log(`Opening order link: ${orderUrl}`);
-            window.open(orderUrl, '_blank'); // Open in a new window
+            window.open(orderUrl, '_blank');
         });
     } catch (error) {
         console.error("Error loading JSON or initializing site:", error);
     }
 
-    // Function to add social media link
     function addSocialLink(url, platform) {
         const link = document.createElement("a");
         link.href = url;
@@ -112,9 +91,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         socialLinksContainer.appendChild(link);
     }
 
-    // Function to render products
     function renderProducts(productArray) {
-        productList.innerHTML = ""; // Clear current products
+        productList.innerHTML = "";
         if (productArray.length === 0) {
             productList.innerHTML = `<p class="col-span-full text-center text-gray-500">No products found.</p>`;
             return;
@@ -131,17 +109,49 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             `;
 
-            // Open modal on click
             tile.addEventListener("click", () => {
                 console.log(`Opening modal for product: ${product.name}`);
                 modalTitle.textContent = product.name;
                 modalDescription.textContent = product.description;
-                modalImage.src = product.image;
                 orderLink.href = product.orderLink;
+
+                populateGallery(product.id); // Load gallery images
                 modal.classList.remove("hidden");
             });
 
             productList.appendChild(tile);
+        });
+    }
+
+    async function populateGallery(productId) {
+        gallery.innerHTML = ""; // Clear current gallery images
+        const folderPath = `images/${productId}/`;
+        let imageFound = false;
+
+        for (let i = 1; i <= 100; i++) {
+            const imagePath = `${folderPath}${String(i).padStart(2, '0')}.jpg`;
+            const exists = await checkImageExists(imagePath);
+            if (exists) {
+                const img = document.createElement("img");
+                img.src = imagePath;
+                img.alt = `Product Image ${i}`;
+                img.className = "w-24 h-24 object-cover rounded-lg shadow-sm";
+                gallery.appendChild(img);
+                imageFound = true;
+            }
+        }
+
+        if (!imageFound) {
+            gallery.innerHTML = `<p class="text-gray-500">No additional images available.</p>`;
+        }
+    }
+
+    function checkImageExists(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = url;
         });
     }
 });
