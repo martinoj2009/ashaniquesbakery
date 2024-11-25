@@ -183,4 +183,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             img.src = url;
         });
     }
+
+    document.getElementById("chat-toggle").addEventListener("click", () => {
+        const chatWidget = document.getElementById("chatgpt-widget");
+        if (chatWidget.classList.contains("hidden")) {
+            chatWidget.classList.remove("hidden");
+        } else {
+            chatWidget.classList.add("hidden");
+        }
+    });
+    
 });
