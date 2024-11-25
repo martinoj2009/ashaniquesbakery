@@ -184,13 +184,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    document.getElementById("chat-toggle").addEventListener("click", () => {
-        const chatWidget = document.getElementById("chatgpt-widget");
-        if (chatWidget.classList.contains("hidden")) {
-            chatWidget.classList.remove("hidden");
-        } else {
-            chatWidget.classList.add("hidden");
-        }
+    document.getElementById("open-chatgpt").addEventListener("click", () => {
+        const chatGPTUrl = "https://chatgpt.com/g/g-6743e463e6208191bc7ef1b844696ea3-ashanique-s-bakery";
+        window.open(chatGPTUrl, "_blank", "width=800,height=600,scrollbars=yes,resizable=yes");
     });
+    
     
 });
