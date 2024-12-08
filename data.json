@@ -16,7 +16,7 @@
           "id": 1,
           "name": "Cupcakes",
           "description": "A rich and moist chocolate cake perfect for any occasion.",
-          "image": "images/cupcakes.jpg",
+          "image": "images/1/01.jpg",
           "variations": [
               {
                   "sku": "CUP-SINGLE",
@@ -36,7 +36,7 @@
           "id": 2,
           "name": "Apple Crumble Cheese Cake",
           "description": "A classic apple crumble with a rich and creamy cheese filling.",
-          "image": "images/applecrumble.jpg",
+          "image": "images/2/02.jpg",
           "variations": [
               {
                   "sku": "ACC-WHOLE",
@@ -56,7 +56,7 @@
           "id": 3,
           "name": "Apple Pie",
           "description": "A classic apple pie with a rich and creamy cheese filling.",
-          "image": "images/applepie.jpg",
+          "image": "images/3/03.jpg",
           "variations": [
               {
                   "sku": "APP-WHOLE",
