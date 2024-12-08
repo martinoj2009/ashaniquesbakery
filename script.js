@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         console.log("Initializing site...");
 
-        const response = await fetch("data.json", { cache: "force-cache" });
+        const response = await fetch("data.json");
         if (!response.ok) throw new Error(`Failed to load data.json: ${response.statusText}`);
         const data = await response.json();
         console.log("Fetched data:", data);
