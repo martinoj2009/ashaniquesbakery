@@ -21,7 +21,13 @@
               {
                   "sku": "CUP-SINGLE",
                   "name": "Single Cupcake",
-                  "price": "$3.50",
+                  "price": "$3.75",
+                  "orderLink": "https://square.link/u/hwf22OPf"
+              },
+              {
+                  "sku": "CUP-DOZEN",
+                  "name": "Dozen Cupcakes",
+                  "price": "$40.00",
                   "orderLink": "https://square.link/u/hwf22OPf"
               }
           ]
@@ -41,7 +47,7 @@
               {
                   "sku": "ACC-SLICE",
                   "name": "Slice of Apple Crumble Cheesecake",
-                  "price": "$7.00",
+                  "price": "$6.00",
                   "orderLink": "https://square.link/u/FOdCo0c2"
               }
           ]
@@ -57,6 +63,132 @@
                   "name": "Whole Apple Pie",
                   "price": "$25.00",
                   "orderLink": "https://square.link/u/FOdCo0c2"
+              },
+              {
+                  "sku": "APP-SLICE",
+                  "name": "Apple Pie Slice",
+                  "price": "$5.00",
+                  "orderLink": "https://square.link/u/FOdCo0c2"
+              }
+          ]
+      },
+      {
+          "id": 4,
+          "name": "Carrot Cake",
+          "description": "A moist carrot cake topped with cream cheese frosting.",
+          "image": "images/carrotcake.jpg",
+          "variations": [
+              {
+                  "sku": "CARROT-WHOLE",
+                  "name": "Whole Carrot Cake",
+                  "price": "$60.00",
+                  "orderLink": "https://square.link/u/carrotwhole"
+              },
+              {
+                  "sku": "CARROT-CUP",
+                  "name": "Carrot Cake Cupcake",
+                  "price": "$4.00",
+                  "orderLink": "https://square.link/u/carrotcupcake"
+              }
+          ]
+      },
+      {
+          "id": 5,
+          "name": "Chocolate Cake",
+          "description": "A decadent chocolate cake with rich chocolate frosting.",
+          "image": "images/chocolatecake.jpg",
+          "variations": [
+              {
+                  "sku": "CHOCOLATE-WHOLE",
+                  "name": "Whole Chocolate Cake",
+                  "price": "$60.00",
+                  "orderLink": "https://square.link/u/chocolatewhole"
+              },
+              {
+                  "sku": "CHOCOLATE-CUP",
+                  "name": "Chocolate Cake Cupcake",
+                  "price": "$4.00",
+                  "orderLink": "https://square.link/u/chocolatecupcake"
+              }
+          ]
+      },
+      {
+          "id": 6,
+          "name": "German Chocolate Cake",
+          "description": "A classic German chocolate cake with coconut-pecan frosting.",
+          "image": "images/germanchocolate.jpg",
+          "variations": [
+              {
+                  "sku": "GERMAN-WHOLE",
+                  "name": "Whole German Chocolate Cake",
+                  "price": "$60.00",
+                  "orderLink": "https://square.link/u/germanwhole"
+              },
+              {
+                  "sku": "GERMAN-CUP",
+                  "name": "German Chocolate Cupcake",
+                  "price": "$4.00",
+                  "orderLink": "https://square.link/u/germancupcake"
+              }
+          ]
+      },
+      {
+          "id": 7,
+          "name": "Red Velvet Cake",
+          "description": "A classic red velvet cake with cream cheese frosting.",
+          "image": "images/redvelvet.jpg",
+          "variations": [
+              {
+                  "sku": "REDVELVET-WHOLE",
+                  "name": "Whole Red Velvet Cake",
+                  "price": "$60.00",
+                  "orderLink": "https://square.link/u/redvelvetwhole"
+              },
+              {
+                  "sku": "REDVELVET-CUP",
+                  "name": "Red Velvet Cupcake",
+                  "price": "$4.00",
+                  "orderLink": "https://square.link/u/redvelvetcupcake"
+              }
+          ]
+      },
+      {
+          "id": 8,
+          "name": "Strawberry Cake",
+          "description": "A delightful strawberry cake with fresh strawberry frosting.",
+          "image": "images/strawberrycake.jpg",
+          "variations": [
+              {
+                  "sku": "STRAWBERRY-WHOLE",
+                  "name": "Whole Strawberry Cake",
+                  "price": "$60.00",
+                  "orderLink": "https://square.link/u/strawberrywhole"
+              },
+              {
+                  "sku": "STRAWBERRY-CUP",
+                  "name": "Strawberry Cupcake",
+                  "price": "$4.00",
+                  "orderLink": "https://square.link/u/strawberrycupcake"
+              }
+          ]
+      },
+      {
+          "id": 9,
+          "name": "Berry Chantilly Cake",
+          "description": "A light and fluffy cake with fresh berries and Chantilly cream.",
+          "image": "images/berrychantilly.jpg",
+          "variations": [
+              {
+                  "sku": "CHANTILLY-WHOLE",
+                  "name": "Whole Berry Chantilly Cake",
+                  "price": "$60.00",
+                  "orderLink": "https://square.link/u/chantillywhole"
+              },
+              {
+                  "sku": "CHANTILLY-CUP",
+                  "name": "Berry Chantilly Cupcake",
+                  "price": "$4.00",
+                  "orderLink": "https://square.link/u/chantillycupcake"
               }
           ]
       }

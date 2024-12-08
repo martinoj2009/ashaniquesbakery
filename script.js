@@ -103,6 +103,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     
         productArray.forEach((product) => {
+            if (!product.variations || product.variations.length === 0) {
+                console.error(`Product "${product.name}" does not have any variations.`);
+                return;
+            }
+    
             const tile = document.createElement("div");
             tile.classList.add("product-tile", "bg-white", "rounded-lg", "shadow-lg", "hover:shadow-xl", "transition-shadow", "p-4");
             tile.innerHTML = `
