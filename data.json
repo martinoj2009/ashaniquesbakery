@@ -1,41 +1,64 @@
 {
-    "bakeryInfo": {
+  "bakeryInfo": {
       "name": "Ashanique's Bakery",
       "contact": {
-        "phone": "",
-        "email": "",
-        "address": ""
+          "phone": "",
+          "email": "",
+          "address": ""
       },
       "social": {
           "instagram": "https://www.instagram.com/ashaniques_bakery/",
           "facebook": "https://www.facebook.com/profile.php?id=61564911629916"
       }
-    },
-    "products": [
+  },
+  "products": [
       {
-        "id": 1,
-        "name": "Cupcakes",
-        "price": "$3.75",
-        "image": "images/cupcakes.jpg",
-        "description": "A rich and moist chocolate cake perfect for any occasion.",
-        "orderLink": "https://square.link/u/hwf22OPf"
+          "id": 1,
+          "name": "Cupcakes",
+          "description": "A rich and moist chocolate cake perfect for any occasion.",
+          "image": "images/cupcakes.jpg",
+          "variations": [
+              {
+                  "sku": "CUP-SINGLE",
+                  "name": "Single Cupcake",
+                  "price": "$3.50",
+                  "orderLink": "https://square.link/u/hwf22OPf"
+              }
+          ]
       },
       {
-        "id": 2,
-        "name": "Apple Crumble Cheese Cake",
-        "price": "$50.00",
-        "image": "images/applecrumble.jpg",
-        "description": "A classic apple crumble with a rich and creamy cheese filling.",
-        "orderLink": "https://square.link/u/FOdCo0c2"
+          "id": 2,
+          "name": "Apple Crumble Cheese Cake",
+          "description": "A classic apple crumble with a rich and creamy cheese filling.",
+          "image": "images/applecrumble.jpg",
+          "variations": [
+              {
+                  "sku": "ACC-WHOLE",
+                  "name": "Whole Apple Crumble Cheesecake",
+                  "price": "$50.00",
+                  "orderLink": "https://square.link/u/FOdCo0c2"
+              },
+              {
+                  "sku": "ACC-SLICE",
+                  "name": "Slice of Apple Crumble Cheesecake",
+                  "price": "$7.00",
+                  "orderLink": "https://square.link/u/FOdCo0c2"
+              }
+          ]
       },
       {
-        "id": 3,
-        "name": "Apple Pie",
-        "price": "$25.00",
-        "image": "images/applepie.jpg",
-        "description": "A classic apple pie with a rich and creamy cheese filling.",
-        "orderLink": "https://square.link/u/FOdCo0c2"
+          "id": 3,
+          "name": "Apple Pie",
+          "description": "A classic apple pie with a rich and creamy cheese filling.",
+          "image": "images/applepie.jpg",
+          "variations": [
+              {
+                  "sku": "APP-WHOLE",
+                  "name": "Whole Apple Pie",
+                  "price": "$25.00",
+                  "orderLink": "https://square.link/u/FOdCo0c2"
+              }
+          ]
       }
-    ]
-  }
-  
+  ]
+}
