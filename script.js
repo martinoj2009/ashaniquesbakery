@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         console.log("Initializing site...");
 
-        const response = await fetch("data.json", { cache: "force-cache" });
+        const response = await fetch("data.json");
         if (!response.ok) throw new Error(`Failed to load data.json: ${response.statusText}`);
         const data = await response.json();
         console.log("Fetched data:", data);
@@ -75,8 +75,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         orderLink.addEventListener("click", (event) => {
             event.preventDefault();
+            const depositAmount = 10; // Fixed deposit amount
             const orderUrl = orderLink.href;
-            console.log(`Opening order link: ${orderUrl}`);
+            console.log(`User is placing a deposit for: $${depositAmount}`);
+            alert("You are paying a $10 deposit. The full price will be invoiced.");
             window.open(orderUrl, '_blank');
         });
     } catch (error) {
@@ -99,31 +101,58 @@ document.addEventListener("DOMContentLoaded", async () => {
             productList.innerHTML = `<p class="col-span-full text-center text-gray-500">No products found.</p>`;
             return;
         }
-
+    
         productArray.forEach((product) => {
-            const imagePath = `images/${product.id}/01.jpg?v=1`; // Append query string for caching
+            if (!product.variations || product.variations.length === 0) {
+                console.error(`Product "${product.name}" does not have any variations.`);
+                return;
+            }
+    
             const tile = document.createElement("div");
             tile.classList.add("product-tile", "bg-white", "rounded-lg", "shadow-lg", "hover:shadow-xl", "transition-shadow", "p-4");
             tile.innerHTML = `
-                <img src="${imagePath}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="product-info text-center mt-4">
                     <h3 class="text-lg font-semibold">${product.name}</h3>
-                    <p class="text-pink-500 font-bold">${product.price}</p>
+                    <p class="text-pink-500 font-bold">From ${product.variations[0].price}</p>
                 </div>
             `;
-
+    
             tile.addEventListener("click", () => {
-                console.log(`Opening modal for product: ${product.name}`);
-                modalTitle.textContent = product.name;
-                modalDescription.textContent = product.description;
-                orderLink.href = product.orderLink;
-
-                populateGallery(product.id); // Load gallery images
-                modal.classList.remove("hidden");
+                openProductModal(product);
             });
-
+    
             productList.appendChild(tile);
         });
+    }
+
+    function openProductModal(product) {
+        modalTitle.textContent = product.name;
+        modalDescription.textContent = product.description;
+    
+        // Populate variations dropdown
+        const variationDropdown = document.getElementById("variationDropdown");
+        variationDropdown.innerHTML = product.variations
+            .map(
+                (variation) =>
+                    `<option value="${variation.orderLink}" data-price="${variation.price}">${variation.name} - ${variation.price}</option>`
+            )
+            .join("");
+    
+        // Update order link based on selection
+        variationDropdown.addEventListener("change", (event) => {
+            const selectedOption = event.target.selectedOptions[0];
+            const orderLinkHref = selectedOption.value;
+            const selectedPrice = selectedOption.dataset.price;
+    
+            // Update the order link and inform user about the deposit
+            orderLink.href = orderLinkHref;
+            console.log(`Selected SKU deposit: $10 for variation priced at ${selectedPrice}`);
+        });
+    
+        // Initialize modal with the first variation selected
+        variationDropdown.dispatchEvent(new Event("change"));
+        modal.classList.remove("hidden");
     }
 
     async function populateGallery(productId) {
