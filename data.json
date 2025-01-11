@@ -19,12 +19,6 @@
           "image": "images/1/01.jpg",
           "variations": [
               {
-                  "sku": "CUP-SINGLE",
-                  "name": "Single Cupcake",
-                  "price": "$3.75",
-                  "orderLink": "https://square.link/u/hwf22OPf"
-              },
-              {
                   "sku": "CUP-DOZEN",
                   "name": "Dozen Cupcakes",
                   "price": "$40.00",
