@@ -1,91 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashanique's Bakery</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="script.js"></script>
-    <script defer async src="https://analytics.martinojones.com/script.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="bg-gray-50 text-gray-800">
-    <!-- Hero Section -->
-    <header class="bg-gradient-to-r from-pink-500 to-red-500 text-white py-10">
-        <div class="container mx-auto text-center">
-            <h1 id="bakery-name" class="text-4xl font-bold mb-4">Ashanique's Bakery</h1>
-            <div id="social-links" class="flex justify-center space-x-6">
-                <!-- Social media links will be dynamically added here -->
-            </div>
-        </div>
+<body>
+    <header>
+        <h1>Ashanique's Bakery</h1>
+        <div id="social-links-container" class="social-links"></div>
     </header>
-
-    <!-- Favicon Section -->
-    <div class="relative -mt-8 mb-10">
-        <div class="flex justify-center">
-            <div class="bg-white p-2 rounded-full shadow-lg">
-                <img src="favicon.ico" alt="Ashanique's Bakery Logo" class="w-20 h-20 rounded-full object-cover">
-            </div>
-        </div>
-    </div>
-
-    <!-- Search and Sort Controls -->
-    <div class="container mx-auto py-6 px-4">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <!-- Search Bar -->
-            <input type="text" id="searchBar" placeholder="Search products..."
-                class="w-full md:w-1/2 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-            <!-- Sort Dropdown -->
-            <select id="sortDropdown"
-                class="w-full md:w-1/4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500">
-                <option value="default">Sort by</option>
-                <option value="name-asc">Name (A-Z)</option>
-                <option value="name-desc">Name (Z-A)</option>
-                <option value="price-asc">Price (Low to High)</option>
-                <option value="price-desc">Price (High to Low)</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- Open ChatGPT Button -->
-    <button id="open-chatgpt"
-        class="fixed bottom-4 right-4 bg-pink-500 text-white p-4 rounded-full shadow-lg hover:bg-pink-700 focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 10h.01M12 10h.01M16 10h.01M9 16h6m-7 4h8a2 2 0 002-2V6a2 2 0 00-2-2H9a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-    </button>
-
-    <!-- Product List -->
-    <main class="container mx-auto py-10 px-4">
-        <h2 class="text-3xl font-bold text-center mb-8">Our Delicious Creations</h2>
-        <div id="product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Products will be dynamically added here -->
-        </div>
+    
+    <main>
+        <div id="product-list"></div>
     </main>
 
-    <!-- Modal -->
-    <div id="productModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white p-6 rounded-lg w-11/12 md:w-1/2 relative flex flex-col items-center text-center">
-            <button id="closeModal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">&times;</button>
-            <h2 id="modalTitle" class="text-2xl font-bold mb-4"></h2>
-            <p id="modalDescription" class="text-gray-700 mb-4"></p>
-    
-            <!-- Variations Dropdown -->
-            <label for="variationDropdown" class="block text-sm text-gray-500 mb-2">Choose a variation:</label>
-            <select id="variationDropdown" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 mb-4">
-                <!-- Options will be dynamically added here -->
-            </select>
-    
-            <p class="text-red-600 text-sm mb-4">Note: This is a $10 deposit. The full price will be invoiced.</p>
-            <a id="orderLink" href="#" class="bg-gradient-to-r from-pink-500 to-red-500 text-white px-4 py-2 rounded hover:opacity-90">Pay Deposit</a>
+    <div class="modal">
+        <div class="modal-content">
+            <!-- Modal content will be dynamically inserted -->
         </div>
     </div>
-    
-    
 
+    <script src="script.js"></script>
 </body>
-
 </html>
