@@ -1,165 +1,159 @@
-// DOM Elements
-const productList = document.getElementById('product-list');
-const socialLinksContainer = document.getElementById('social-links-container');
-const modal = document.querySelector('.modal');
-const modalContent = document.querySelector('.modal-content');
-const loadingSpinner = document.querySelector('.loading-spinner');
-
-// Data Loading
-async function loadData() {
-    try {
-        loadingSpinner.style.display = 'block';
-        // First try loading from GitHub URL
-        const githubResponse = await fetch('https://raw.githubusercontent.com/martinoj2009/ashaniquesbakery/refs/heads/main/data.json');
-        
-        if (!githubResponse.ok) throw new Error('Failed to fetch GitHub data');
-        
-        const githubData = await githubResponse.json();
-        return githubData;
-    } catch (error) {
-        console.log('Failed to load data from GitHub:', error);
-        // Fall back to local data.json
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const productList = document.getElementById('product-list');
+    const modal = document.getElementById('product-modal');
+    const modalContent = document.querySelector('.modal-content');
+    
+    // Initialize Material UI components
+    const button = document.createElement('button');
+    button.className = 'mui-btn mui-btn--primary';
+    
+    // Data Loading
+    async function loadData() {
         try {
-            const localResponse = await fetch('data.json');
-            const localData = await localResponse.json();
-            console.log('Successfully loaded data from local file');
-            return localData;
-        } catch (localError) {
-            console.error('Failed to load data from local file:', localError);
-            displayErrorMessage('Failed to load products. Please refresh the page.');
-            return {};
+            // First try loading from GitHub URL
+            const githubResponse = await fetch('https://raw.githubusercontent.com/martinoj2009/ashaniquesbakery/refs/heads/main/data.json');
+            
+            if (!githubResponse.ok) throw new Error('Failed to fetch GitHub data');
+            
+            const githubData = await githubResponse.json();
+            return githubData;
+        } catch (error) {
+            console.log('Failed to load data from GitHub:', error);
+            // Fall back to local data.json
+            try {
+                const localResponse = await fetch('data.json');
+                const localData = await localResponse.json();
+                console.log('Successfully loaded data from local file');
+                return localData;
+            } catch (localError) {
+                console.error('Failed to load data from local file:', localError);
+                return {};
+            }
         }
-    } finally {
-        loadingSpinner.style.display = 'none';
     }
-}
 
-// Display Error Message
-function displayErrorMessage(message) {
-    const errorMessage = document.createElement('div');
-    errorMessage.className = 'error-message';
-    errorMessage.textContent = message;
-    productList.appendChild(errorMessage);
-    setTimeout(() => errorMessage.remove(), 5000);
-}
+    // Function to add social media links
+    function addSocialLinks(bakeryInfo) {
+        const socialLinksContainer = document.querySelector('.social-links-container');
+        if (!socialLinksContainer || !bakeryInfo?.social) return;
 
-// Function to add social media links
-function addSocialLinks(bakeryInfo) {
-    if (!bakeryInfo?.social) return;
-    
-    socialLinksContainer.innerHTML = '';
-    
-    Object.entries(bakeryInfo.social).forEach(([platform, url]) => {
-        if (url) {
-            const link = document.createElement('a');
-            link.href = url;
-            link.textContent = platform;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.className = 'social-link';
-            socialLinksContainer.appendChild(link);
+        Object.entries(bakeryInfo.social).forEach(([platform, url]) => {
+            if (url) {
+                const link = document.createElement('a');
+                link.href = url;
+                link.textContent = platform;
+                link.target = '_blank';
+                link.className = 'mui-btn mui-btn--flat';
+                socialLinksContainer.appendChild(link);
+            }
+        });
+    }
+
+    // Product Rendering
+    function renderProducts(products) {
+        productList.innerHTML = '';
+        
+        if (products.length === 0) {
+            productList.innerHTML = `
+                <p class="mui--text-center mui--text-hint">No products available at this time.</p>
+            `;
+            return;
         }
-    });
-}
 
-// Product Rendering
-function createProductCard(product) {
-    const card = document.createElement('article');
-    card.className = 'product-card';
-    
-    card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <div class="product-info">
-            <h3>${product.name}</h3>
-            <p class="product-price">${product.variations[0].price}</p>
-        </div>
-    `;
-    
-    card.addEventListener('click', () => openProductModal(product));
-    return card;
-}
-
-function renderProducts(products) {
-    productList.innerHTML = '';
-    
-    if (products.length === 0) {
-        const noProductsMessage = document.createElement('p');
-        noProductsMessage.textContent = 'No products available at this time.';
-        noProductsMessage.style.textAlign = 'center';
-        noProductsMessage.style.color = '#64748b';
-        productList.appendChild(noProductsMessage);
-        return;
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'mui-card';
+            card.innerHTML = `
+                <div class="mui-card-header">
+                    <img src="${product.image}" alt="${product.name}" class="mui-card-media">
+                </div>
+                <div class="mui-card-content">
+                    <h3>${product.name}</h3>
+                    <p class="mui--text-caption">${product.description}</p>
+                    <p class="price mui--text-caption">${product.variations[0].price}</p>
+                </div>
+                <div class="mui-card-actions">
+                    <button class="mui-btn mui-btn--primary" onclick="openProductModal('${product.id}')">
+                        View Details
+                    </button>
+                </div>
+            `;
+            productList.appendChild(card);
+        });
     }
-    
-    products.forEach(product => {
-        productList.appendChild(createProductCard(product));
-    });
-}
 
-// Modal Handling
-function openProductModal(product) {
-    modalContent.innerHTML = `
-        <h2>${product.name}</h2>
-        <p>${product.description}</p>
-        <div class="variation-selector">
-            <select id="variation-dropdown">
-                ${product.variations.map(variation => `
-                    <option value="${variation.orderLink}" data-price="${variation.price}">
-                        ${variation.name} - ${variation.price}
-                    </option>
-                `).join('')}
-            </select>
-        </div>
-        <button class="order-button" disabled>
-            Pay Deposit
-        </button>
-    `;
-    
-    const dropdown = document.getElementById('variation-dropdown');
-    const button = document.querySelector('.order-button');
-    
-    dropdown.addEventListener('change', () => {
-        button.disabled = false;
-        button.addEventListener('click', () => handleOrder(dropdown.value));
-    });
-    
-    modal.style.display = 'block';
-}
+    // Modal Handling
+    function openProductModal(productId) {
+        const product = data.products.find(p => p.id == productId);
+        
+        if (!product) return;
 
-// Close Modal
-function closeModal() {
-    modal.style.display = 'none';
-}
+        const dialog = document.createElement('div');
+        dialog.className = 'mui-dialog';
+        dialog.innerHTML = `
+            <div class="mui-dialog-title">${product.name}</div>
+            <div class="mui-dialog-content">
+                <p>${product.description}</p>
+                <div class="mui-select">
+                    <select id="variation-dropdown">
+                        ${product.variations.map(variation => `
+                            <option value="${variation.orderLink}" data-price="${variation.price}">
+                                ${variation.name} - ${variation.price}
+                            </option>
+                        `).join('')}
+                    </select>
+                </div>
+                <button class="mui-btn mui-btn--primary order-button" disabled>
+                    Pay Deposit
+                </button>
+            </div>
+        `;
 
-// Order Handling
-function handleOrder(orderLink) {
-    window.open(orderLink, '_blank');
-    closeModal();
-}
+        modal.appendChild(dialog);
 
-// Initialize
-async function init() {
-    try {
-        const data = await loadData();
-        addSocialLinks(data.bakeryInfo);
-        const products = data.products || [];
-        renderProducts(products);
-    } catch (error) {
-        console.error('Initialization failed:', error);
+        // Initialize dialog
+        const options = {
+            mode: 'fixed',
+            position: ['center', 'center']
+        };
+        const dialogInstance = new mui.Dialog(dialog, options);
+        dialogInstance.show();
+
+        // Handle variation selection
+        const dropdown = document.getElementById('variation-dropdown');
+        const button = document.querySelector('.order-button');
+        
+        dropdown.addEventListener('change', () => {
+            button.disabled = false;
+            button.addEventListener('click', () => handleOrder(dropdown.value));
+        });
+
+        // Close dialog when clicking outside
+        dialog.addEventListener('click', (e) => {
+            if (e.target === dialog) {
+                dialogInstance.close();
+            }
+        });
     }
-}
 
-// Event Listeners
-document.addEventListener('DOMContentLoaded', init);
-modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        closeModal();
+    // Order Handling
+    function handleOrder(orderLink) {
+        window.open(orderLink, '_blank');
     }
-});
 
-// Close modal when ESC key is pressed
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && modal.style.display === 'block') {
-        closeModal();
+    // Initialize
+    async function init() {
+        try {
+            const data = await loadData();
+            addSocialLinks(data.bakeryInfo);
+            const products = data.products || [];
+            renderProducts(products);
+        } catch (error) {
+            console.error('Initialization failed:', error);
+        }
     }
+
+    // Run initialization
+    init();
 });

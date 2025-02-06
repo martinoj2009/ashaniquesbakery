@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashanique's Bakery</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material-ui/core@5.4.2/styles/material.min.css">
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
-    <meta name="description" content="Handcrafted Desserts by Ashanique's Bakery">
 </head>
-<body class="theme-bakery">
+<body>
     <header>
         <div class="header-content">
-            <h1>Ashanique's Bakery</h1>
+            <h1 class="title">Ashanique's Bakery</h1>
             <div class="social-links-container"></div>
         </div>
     </header>
@@ -20,12 +20,14 @@
         <div class="product-grid" id="product-list">
             <!-- Product cards will be dynamically added here -->
         </div>
-        <div class="modal">
+        <div class="modal" id="product-modal">
             <div class="modal-content">
                 <!-- Modal content will be dynamically inserted -->
-                <div class="loading-spinner"></div>
             </div>
         </div>
     </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@material-ui/core@5.4.2/umd/material-ui-production.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
