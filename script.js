@@ -3,12 +3,12 @@ const productList = document.getElementById('product-list');
 const socialLinksContainer = document.getElementById('social-links-container');
 const modal = document.querySelector('.modal');
 const modalContent = document.querySelector('.modal-content');
-const orderLink = document.querySelector('.order-button');
-const variationDropdown = document.getElementById('variationDropdown');
+const loadingSpinner = document.querySelector('.loading-spinner');
 
 // Data Loading
 async function loadData() {
     try {
+        loadingSpinner.style.display = 'block';
         // First try loading from GitHub URL
         const githubResponse = await fetch('https://raw.githubusercontent.com/martinoj2009/ashaniquesbakery/refs/heads/main/data.json');
         
@@ -26,19 +26,29 @@ async function loadData() {
             return localData;
         } catch (localError) {
             console.error('Failed to load data from local file:', localError);
+            displayErrorMessage('Failed to load products. Please refresh the page.');
             return {};
         }
+    } finally {
+        loadingSpinner.style.display = 'none';
     }
+}
+
+// Display Error Message
+function displayErrorMessage(message) {
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
+    errorMessage.textContent = message;
+    productList.appendChild(errorMessage);
+    setTimeout(() => errorMessage.remove(), 5000);
 }
 
 // Function to add social media links
 function addSocialLinks(bakeryInfo) {
-    if (!socialLinksContainer || !bakeryInfo?.social) return;
-
-    // Clear existing links
+    if (!bakeryInfo?.social) return;
+    
     socialLinksContainer.innerHTML = '';
     
-    // Add each social media link
     Object.entries(bakeryInfo.social).forEach(([platform, url]) => {
         if (url) {
             const link = document.createElement('a');
@@ -53,32 +63,36 @@ function addSocialLinks(bakeryInfo) {
 }
 
 // Product Rendering
+function createProductCard(product) {
+    const card = document.createElement('article');
+    card.className = 'product-card';
+    
+    card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <div class="product-info">
+            <h3>${product.name}</h3>
+            <p class="product-price">${product.variations[0].price}</p>
+        </div>
+    `;
+    
+    card.addEventListener('click', () => openProductModal(product));
+    return card;
+}
+
 function renderProducts(products) {
     productList.innerHTML = '';
     
     if (products.length === 0) {
-        productList.innerHTML = `
-            <p class="text-center text-gray-500">
-                No products available at this time.
-            </p>
-        `;
+        const noProductsMessage = document.createElement('p');
+        noProductsMessage.textContent = 'No products available at this time.';
+        noProductsMessage.style.textAlign = 'center';
+        noProductsMessage.style.color = '#64748b';
+        productList.appendChild(noProductsMessage);
         return;
     }
+    
     products.forEach(product => {
-        const tile = document.createElement('div');
-        tile.className = 'product-tile';
-        
-        tile.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <div class="product-info">
-                <h3>${product.name}</h3>
-                <p class="text-lg font-bold text-primary">
-                    From ${product.variations[0].price}
-                </p>
-            </div>
-        `;
-        tile.addEventListener('click', () => openProductModal(product));
-        productList.appendChild(tile);
+        productList.appendChild(createProductCard(product));
     });
 }
 
@@ -88,8 +102,7 @@ function openProductModal(product) {
         <h2>${product.name}</h2>
         <p>${product.description}</p>
         <div class="variation-selector">
-            <label for="variationDropdown">Choose a variation:</label>
-            <select id="variationDropdown">
+            <select id="variation-dropdown">
                 ${product.variations.map(variation => `
                     <option value="${variation.orderLink}" data-price="${variation.price}">
                         ${variation.name} - ${variation.price}
@@ -101,29 +114,52 @@ function openProductModal(product) {
             Pay Deposit
         </button>
     `;
-    const dropdown = document.getElementById('variationDropdown');
+    
+    const dropdown = document.getElementById('variation-dropdown');
     const button = document.querySelector('.order-button');
+    
     dropdown.addEventListener('change', () => {
         button.disabled = false;
         button.addEventListener('click', () => handleOrder(dropdown.value));
     });
+    
     modal.style.display = 'block';
+}
+
+// Close Modal
+function closeModal() {
+    modal.style.display = 'none';
 }
 
 // Order Handling
 function handleOrder(orderLink) {
     window.open(orderLink, '_blank');
+    closeModal();
 }
 
 // Initialize
 async function init() {
-    const data = await loadData();
-    // Add social links if available
-    addSocialLinks(data.bakeryInfo);
-    // Render products
-    const products = data.products || [];
-    renderProducts(products);
+    try {
+        const data = await loadData();
+        addSocialLinks(data.bakeryInfo);
+        const products = data.products || [];
+        renderProducts(products);
+    } catch (error) {
+        console.error('Initialization failed:', error);
+    }
 }
 
-// Run initialization
-init();
+// Event Listeners
+document.addEventListener('DOMContentLoaded', init);
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+// Close modal when ESC key is pressed
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal.style.display === 'block') {
+        closeModal();
+    }
+});

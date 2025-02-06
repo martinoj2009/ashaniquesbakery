@@ -5,23 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashanique's Bakery</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <meta name="description" content="Handcrafted Desserts by Ashanique's Bakery">
 </head>
-<body>
+<body class="theme-bakery">
     <header>
-        <h1>Ashanique's Bakery</h1>
-        <div id="social-links-container" class="social-links"></div>
+        <div class="header-content">
+            <h1>Ashanique's Bakery</h1>
+            <div class="social-links-container"></div>
+        </div>
     </header>
     
     <main>
-        <div id="product-list"></div>
-    </main>
-
-    <div class="modal">
-        <div class="modal-content">
-            <!-- Modal content will be dynamically inserted -->
+        <div class="product-grid" id="product-list">
+            <!-- Product cards will be dynamically added here -->
         </div>
-    </div>
-
-    <script src="script.js"></script>
+        <div class="modal">
+            <div class="modal-content">
+                <!-- Modal content will be dynamically inserted -->
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
