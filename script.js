@@ -1,159 +1,104 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
+const { 
+    AppBar, Button, Card, CardContent, CardMedia, Dialog, 
+    Select, MenuItem, Typography, TextField
+} = MaterialUI;
+
+// Initialize the app
+document.addEventListener("DOMContentLoaded", async () => {
+    // Render App Bar
+    renderAppBar();
+    
+    // Render Controls
+    renderControls();
+    
+    // Load and render products
+    try {
+        const response = await fetch("data.json");
+        const data = await response.json();
+        renderProducts(data.products);
+    } catch (error) {
+        console.error("Error loading products:", error);
+    }
+});
+
+function renderAppBar() {
+    const appBar = document.getElementById('app-bar');
+    appBar.innerHTML = `
+        <div style="background-color: #f8b400; padding: 16px; color: white;">
+            <h1 style="margin: 0; text-align: center;">Ashanique's Bakery</h1>
+        </div>
+    `;
+}
+
+function renderControls() {
+    const controls = document.getElementById('controls');
+    controls.innerHTML = `
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="margin-bottom: 16px;">
+                <input type="text" 
+                    placeholder="Search products..." 
+                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                >
+            </div>
+            <div>
+                <select style="width: 200px; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
+                </select>
+            </div>
+        </div>
+    `;
+}
+
+function renderProducts(products) {
     const productList = document.getElementById('product-list');
-    const modal = document.getElementById('product-modal');
-    const modalContent = document.querySelector('.modal-content');
-    
-    // Initialize Material UI components
-    const button = document.createElement('button');
-    button.className = 'mui-btn mui-btn--primary';
-    
-    // Data Loading
-    async function loadData() {
-        try {
-            // First try loading from GitHub URL
-            const githubResponse = await fetch('https://raw.githubusercontent.com/martinoj2009/ashaniquesbakery/refs/heads/main/data.json');
-            
-            if (!githubResponse.ok) throw new Error('Failed to fetch GitHub data');
-            
-            const githubData = await githubResponse.json();
-            return githubData;
-        } catch (error) {
-            console.log('Failed to load data from GitHub:', error);
-            // Fall back to local data.json
-            try {
-                const localResponse = await fetch('data.json');
-                const localData = await localResponse.json();
-                console.log('Successfully loaded data from local file');
-                return localData;
-            } catch (localError) {
-                console.error('Failed to load data from local file:', localError);
-                return {};
-            }
-        }
-    }
-
-    // Function to add social media links
-    function addSocialLinks(bakeryInfo) {
-        const socialLinksContainer = document.querySelector('.social-links-container');
-        if (!socialLinksContainer || !bakeryInfo?.social) return;
-
-        Object.entries(bakeryInfo.social).forEach(([platform, url]) => {
-            if (url) {
-                const link = document.createElement('a');
-                link.href = url;
-                link.textContent = platform;
-                link.target = '_blank';
-                link.className = 'mui-btn mui-btn--flat';
-                socialLinksContainer.appendChild(link);
-            }
-        });
-    }
-
-    // Product Rendering
-    function renderProducts(products) {
-        productList.innerHTML = '';
-        
-        if (products.length === 0) {
-            productList.innerHTML = `
-                <p class="mui--text-center mui--text-hint">No products available at this time.</p>
-            `;
-            return;
-        }
-
-        products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'mui-card';
-            card.innerHTML = `
-                <div class="mui-card-header">
-                    <img src="${product.image}" alt="${product.name}" class="mui-card-media">
+    productList.innerHTML = products.map(product => `
+        <div class="mui-card" style="cursor: pointer;" onclick="openProductModal(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+            <div style="padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <img src="${product.image}" 
+                     alt="${product.name}" 
+                     style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;"
+                >
+                <div style="padding-top: 16px; text-align: center;">
+                    <h3 style="margin: 0;">${product.name}</h3>
+                    <p style="color: #f8b400; font-weight: bold;">From ${product.variations[0].price}</p>
                 </div>
-                <div class="mui-card-content">
-                    <h3>${product.name}</h3>
-                    <p class="mui--text-caption">${product.description}</p>
-                    <p class="price mui--text-caption">${product.variations[0].price}</p>
-                </div>
-                <div class="mui-card-actions">
-                    <button class="mui-btn mui-btn--primary" onclick="openProductModal('${product.id}')">
-                        View Details
+            </div>
+        </div>
+    `).join('');
+}
+
+function openProductModal(product) {
+    const modal = document.createElement('div');
+    modal.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 24px; border-radius: 8px; max-width: 500px; width: 90%;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0;">${product.name}</h2>
+                    <button onclick="this.closest('div[style*=fixed]').remove()" 
+                            style="background: none; border: none; cursor: pointer; font-size: 24px;">
+                        ×
                     </button>
                 </div>
-            `;
-            productList.appendChild(card);
-        });
-    }
-
-    // Modal Handling
-    function openProductModal(productId) {
-        const product = data.products.find(p => p.id == productId);
-        
-        if (!product) return;
-
-        const dialog = document.createElement('div');
-        dialog.className = 'mui-dialog';
-        dialog.innerHTML = `
-            <div class="mui-dialog-title">${product.name}</div>
-            <div class="mui-dialog-content">
+                <img src="${product.image}" 
+                     alt="${product.name}" 
+                     style="width: 100%; border-radius: 4px; margin: 16px 0;"
+                >
                 <p>${product.description}</p>
-                <div class="mui-select">
-                    <select id="variation-dropdown">
-                        ${product.variations.map(variation => `
-                            <option value="${variation.orderLink}" data-price="${variation.price}">
-                                ${variation.name} - ${variation.price}
-                            </option>
-                        `).join('')}
-                    </select>
-                </div>
-                <button class="mui-btn mui-btn--primary order-button" disabled>
+                <select style="width: 100%; padding: 8px; margin: 16px 0; border: 1px solid #ccc; border-radius: 4px;">
+                    ${product.variations.map(v => `
+                        <option value="${v.orderLink}">${v.name} - ${v.price}</option>
+                    `).join('')}
+                </select>
+                <p style="color: #666;">Note: This is a $10 deposit. The full price will be invoiced.</p>
+                <a href="${product.variations[0].orderLink}" 
+                   style="display: inline-block; background: #f8b400; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">
                     Pay Deposit
-                </button>
+                </a>
             </div>
-        `;
-
-        modal.appendChild(dialog);
-
-        // Initialize dialog
-        const options = {
-            mode: 'fixed',
-            position: ['center', 'center']
-        };
-        const dialogInstance = new mui.Dialog(dialog, options);
-        dialogInstance.show();
-
-        // Handle variation selection
-        const dropdown = document.getElementById('variation-dropdown');
-        const button = document.querySelector('.order-button');
-        
-        dropdown.addEventListener('change', () => {
-            button.disabled = false;
-            button.addEventListener('click', () => handleOrder(dropdown.value));
-        });
-
-        // Close dialog when clicking outside
-        dialog.addEventListener('click', (e) => {
-            if (e.target === dialog) {
-                dialogInstance.close();
-            }
-        });
-    }
-
-    // Order Handling
-    function handleOrder(orderLink) {
-        window.open(orderLink, '_blank');
-    }
-
-    // Initialize
-    async function init() {
-        try {
-            const data = await loadData();
-            addSocialLinks(data.bakeryInfo);
-            const products = data.products || [];
-            renderProducts(products);
-        } catch (error) {
-            console.error('Initialization failed:', error);
-        }
-    }
-
-    // Run initialization
-    init();
-});
+        </div>
+    `;
+    document.body.appendChild(modal);
+}

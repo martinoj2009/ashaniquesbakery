@@ -1,33 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashanique's Bakery</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material-ui/core@5.4.2/styles/material.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Material UI -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            padding: 16px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1 class="title">Ashanique's Bakery</h1>
-            <div class="social-links-container"></div>
-        </div>
-    </header>
-    
-    <main>
-        <div class="product-grid" id="product-list">
-            <!-- Product cards will be dynamically added here -->
-        </div>
-        <div class="modal" id="product-modal">
-            <div class="modal-content">
-                <!-- Modal content will be dynamically inserted -->
-            </div>
-        </div>
-    </main>
+    <!-- App Bar -->
+    <div id="app-bar"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@material-ui/core@5.4.2/umd/material-ui-production.min.js"></script>
+    <!-- Search and Sort -->
+    <div id="controls" style="padding: 16px;"></div>
+
+    <!-- Product Grid -->
+    <div id="product-list" class="product-grid"></div>
+
+    <!-- Product Modal -->
+    <div id="product-modal"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
