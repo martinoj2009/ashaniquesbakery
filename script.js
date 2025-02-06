@@ -29,7 +29,7 @@ function openProductModal(product) {
     
     modal.innerHTML = `
         <div class="modal-content">
-            <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            <button class="close-button" aria-label="Close">×</button>
             <img class="product-image" src="${product.image}" alt="${product.name}">
             <h2>${product.name}</h2>
             <p>${product.description}</p>
@@ -39,11 +39,28 @@ function openProductModal(product) {
                 `).join('')}
             </select>
             <p style="color: #666;">Note: This is a $10 deposit. The full price will be invoiced.</p>
-            <a href="${product.variations[0].orderLink}" class="order-button" target="_blank">
-                Pay Deposit
-            </a>
+            <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                <button class="cancel-button">Cancel</button>
+                <a href="${product.variations[0].orderLink}" class="order-button" target="_blank">
+                    Pay Deposit
+                </a>
+            </div>
         </div>
     `;
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.remove();
+        }
+    });
+
+    // Close modal with X button or Cancel button
+    const closeButton = modal.querySelector('.close-button');
+    const cancelButton = modal.querySelector('.cancel-button');
+    
+    closeButton.addEventListener('click', () => modal.remove());
+    cancelButton.addEventListener('click', () => modal.remove());
     
     document.body.appendChild(modal);
 }
