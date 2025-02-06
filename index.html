@@ -3,39 +3,28 @@
 <head>
     <title>Ashanique's Bakery</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Material UI -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"></script>
-
-    
-    <!-- Custom CSS -->
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-            padding: 16px;
-        }
-    </style>
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Material Design CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@mui/material@5.0.0/dist/mui-styles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-    <!-- App Bar -->
-    <div id="app-bar"></div>
+    <header class="app-bar">
+        <h1>Ashanique's Bakery</h1>
+    </header>
 
-    <!-- Search and Sort -->
-    <div id="controls" style="padding: 16px;"></div>
+    <div class="controls">
+        <input type="text" id="searchBar" placeholder="Search products..." class="search-input">
+        <select id="sortDropdown" class="sort-select">
+            <option value="name-asc">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="price-asc">Price (Low to High)</option>
+            <option value="price-desc">Price (High to Low)</option>
+        </select>
+    </div>
 
-    <!-- Product Grid -->
     <div id="product-list" class="product-grid"></div>
-
-    <!-- Product Modal -->
-    <div id="product-modal"></div>
 
     <script src="script.js"></script>
 </body>

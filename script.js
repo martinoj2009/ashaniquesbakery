@@ -1,147 +1,85 @@
-const { 
-    AppBar, Toolbar, Button, Card, CardContent, CardMedia, Dialog,
-    DialogTitle, DialogContent, DialogActions, Select, MenuItem, 
-    Typography, TextField, Box, IconButton
-} = MaterialUI;
-
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch("data.json");
+        const response = await fetch('data.json');
         const data = await response.json();
-        renderAppBar();
-        renderControls();
         renderProducts(data.products);
+        setupSearchAndSort();
     } catch (error) {
-        console.error("Error loading products:", error);
+        console.error('Error loading products:', error);
     }
 });
 
-function renderAppBar() {
-    const appBar = document.getElementById('app-bar');
-    const appBarComponent = document.createElement('div');
-    ReactDOM.render(
-        <AppBar position="static" style={{ backgroundColor: '#f8b400' }}>
-            <Toolbar>
-                <Typography variant="h4" component="h1" style={{ flexGrow: 1, textAlign: 'center' }}>
-                    Ashanique's Bakery
-                </Typography>
-            </Toolbar>
-        </AppBar>,
-        appBarComponent
-    );
-    appBar.appendChild(appBarComponent);
-}
-
-function renderControls() {
-    const controls = document.getElementById('controls');
-    const controlsComponent = document.createElement('div');
-    ReactDOM.render(
-        <Box sx={{ maxWidth: 1200, margin: '0 auto', padding: 2 }}>
-            <TextField
-                fullWidth
-                placeholder="Search products..."
-                variant="outlined"
-                sx={{ marginBottom: 2 }}
-            />
-            <Select
-                defaultValue="name-asc"
-                sx={{ width: 200 }}
-            >
-                <MenuItem value="name-asc">Name (A-Z)</MenuItem>
-                <MenuItem value="name-desc">Name (Z-A)</MenuItem>
-                <MenuItem value="price-asc">Price (Low to High)</MenuItem>
-                <MenuItem value="price-desc">Price (High to Low)</MenuItem>
-            </Select>
-        </Box>,
-        controlsComponent
-    );
-    controls.appendChild(controlsComponent);
-}
-
 function renderProducts(products) {
     const productList = document.getElementById('product-list');
-    const productsComponent = document.createElement('div');
-    ReactDOM.render(
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 2, p: 2 }}>
-            {products.map(product => (
-                <Card 
-                    key={product.id}
-                    onClick={() => openProductModal(product)}
-                    sx={{ cursor: 'pointer' }}
-                >
-                    <CardMedia
-                        component="img"
-                        height="200"
-                        image={product.image}
-                        alt={product.name}
-                    />
-                    <CardContent sx={{ textAlign: 'center' }}>
-                        <Typography variant="h6">{product.name}</Typography>
-                        <Typography variant="subtitle1" sx={{ color: '#f8b400', fontWeight: 'bold' }}>
-                            From {product.variations[0].price}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            ))}
-        </Box>,
-        productsComponent
-    );
-    productList.appendChild(productsComponent);
+    productList.innerHTML = products.map(product => `
+        <div class="product-card" onclick="openProductModal(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+            <img class="product-image" src="${product.image}" alt="${product.name}">
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p style="color: var(--primary-color)">From ${product.variations[0].price}</p>
+            </div>
+        </div>
+    `).join('');
 }
 
 function openProductModal(product) {
-    const modalContainer = document.createElement('div');
-    ReactDOM.render(
-        <Dialog 
-            open={true}
-            onClose={() => modalContainer.remove()}
-            maxWidth="sm"
-            fullWidth
-        >
-            <DialogTitle>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    {product.name}
-                    <IconButton onClick={() => modalContainer.remove()}>
-                        <span className="material-icons">close</span>
-                    </IconButton>
-                </Box>
-            </DialogTitle>
-            <DialogContent>
-                <CardMedia
-                    component="img"
-                    image={product.image}
-                    alt={product.name}
-                    sx={{ borderRadius: 1, mb: 2 }}
-                />
-                <Typography variant="body1" sx={{ mb: 2 }}>
-                    {product.description}
-                </Typography>
-                <Select
-                    fullWidth
-                    defaultValue={product.variations[0].orderLink}
-                    sx={{ mb: 2 }}
-                >
-                    {product.variations.map(v => (
-                        <MenuItem key={v.sku} value={v.orderLink}>
-                            {v.name} - {v.price}
-                        </MenuItem>
-                    ))}
-                </Select>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                    Note: This is a $10 deposit. The full price will be invoiced.
-                </Typography>
-            </DialogContent>
-            <DialogActions>
-                <Button
-                    variant="contained"
-                    href={product.variations[0].orderLink}
-                    sx={{ backgroundColor: '#f8b400', '&:hover': { backgroundColor: '#d59c00' } }}
-                >
-                    Pay Deposit
-                </Button>
-            </DialogActions>
-        </Dialog>,
-        modalContainer
-    );
-    document.body.appendChild(modalContainer);
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.style.display = 'flex';
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <button class="close-button" onclick="this.closest('.modal').remove()">×</button>
+            <img class="product-image" src="${product.image}" alt="${product.name}">
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <select class="sort-select" style="width: 100%; margin: 1rem 0;">
+                ${product.variations.map(v => `
+                    <option value="${v.orderLink}">${v.name} - ${v.price}</option>
+                `).join('')}
+            </select>
+            <p style="color: #666;">Note: This is a $10 deposit. The full price will be invoiced.</p>
+            <a href="${product.variations[0].orderLink}" class="order-button" target="_blank">
+                Pay Deposit
+            </a>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function setupSearchAndSort() {
+    const searchBar = document.getElementById('searchBar');
+    const sortDropdown = document.getElementById('sortDropdown');
+    
+    searchBar.addEventListener('input', filterProducts);
+    sortDropdown.addEventListener('change', sortProducts);
+}
+
+function filterProducts(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    const products = document.querySelectorAll('.product-card');
+    
+    products.forEach(product => {
+        const name = product.querySelector('h3').textContent.toLowerCase();
+        product.style.display = name.includes(searchTerm) ? '' : 'none';
+    });
+}
+
+function sortProducts(event) {
+    const sortValue = event.target.value;
+    const productList = document.getElementById('product-list');
+    const products = Array.from(productList.children);
+    
+    products.sort((a, b) => {
+        const nameA = a.querySelector('h3').textContent;
+        const nameB = b.querySelector('h3').textContent;
+        
+        if (sortValue === 'name-asc') return nameA.localeCompare(nameB);
+        if (sortValue === 'name-desc') return nameB.localeCompare(nameA);
+        // Add price sorting logic if needed
+    });
+    
+    productList.innerHTML = '';
+    products.forEach(product => productList.appendChild(product));
 }
