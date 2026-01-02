@@ -467,6 +467,31 @@ function openRecipeModal(recipe) {
     modal.setAttribute('aria-labelledby', 'recipe-modal-title');
     modal.setAttribute('aria-modal', 'true');
 
+    // Generate sections HTML
+    const sectionsHtml = recipe.sections.map(section => `
+        <div class="recipe-section-group">
+            ${recipe.sections.length > 1 ? `<h3 class="section-name">${escapeHtml(section.name)}</h3>` : ''}
+
+            <div class="recipe-section">
+                <h4>Ingredients</h4>
+                <ul class="ingredients-list">
+                    ${section.ingredients.map(ingredient => `
+                        <li>${escapeHtml(ingredient)}</li>
+                    `).join('')}
+                </ul>
+            </div>
+
+            <div class="recipe-section">
+                <h4>Instructions</h4>
+                <ol class="instructions-list">
+                    ${section.instructions.map(instruction => `
+                        <li>${escapeHtml(instruction)}</li>
+                    `).join('')}
+                </ol>
+            </div>
+        </div>
+    `).join('');
+
     modal.innerHTML = `
         <div class="modal-content recipe-modal-content">
             <button class="close-button" aria-label="Close modal">×</button>
@@ -521,27 +546,11 @@ function openRecipeModal(recipe) {
                 </div>
             </div>
 
-            <div class="recipe-section">
-                <h3>Ingredients</h3>
-                <ul class="ingredients-list">
-                    ${recipe.ingredients.map(ingredient => `
-                        <li>${escapeHtml(ingredient)}</li>
-                    `).join('')}
-                </ul>
-            </div>
-
-            <div class="recipe-section">
-                <h3>Instructions</h3>
-                <ol class="instructions-list">
-                    ${recipe.instructions.map(instruction => `
-                        <li>${escapeHtml(instruction)}</li>
-                    `).join('')}
-                </ol>
-            </div>
+            ${sectionsHtml}
 
             ${recipe.tips && recipe.tips.length > 0 ? `
                 <div class="recipe-section">
-                    <h3>Tips</h3>
+                    <h4>Tips</h4>
                     <ul class="tips-list">
                         ${recipe.tips.map(tip => `
                             <li>${escapeHtml(tip)}</li>

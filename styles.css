@@ -703,16 +703,38 @@ main {
     color: var(--text-color);
 }
 
-.recipe-section {
-    margin: 2rem 0;
+.recipe-section-group {
+    margin: 2.5rem 0;
+    padding: 2rem;
+    background-color: #fafafa;
+    border-radius: 8px;
 }
 
-.recipe-section h3 {
+.recipe-section-group:first-of-type {
+    margin-top: 2rem;
+}
+
+.section-name {
     color: var(--text-color);
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    font-family: 'Playfair Display', serif;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--primary-color);
+    text-align: center;
+}
+
+.recipe-section {
+    margin: 1.5rem 0;
+}
+
+.recipe-section h4 {
+    color: var(--text-color);
+    font-size: 1.25rem;
+    font-weight: 600;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .ingredients-list,
