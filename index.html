@@ -15,26 +15,20 @@
 </head>
 <body>
     <header class="app-bar">
-        <h1 class="bakery-title">Ashanique's Bakery</h1>
-        <p class="bakery-tagline">Fresh Homemade Cakes & Desserts</p>
-    </header>
+        <div class="header-content">
+            <h1 class="bakery-title">Ashanique's Bakery</h1>
+            <p class="bakery-tagline">Delicious Homemade Recipes & Baked Goods</p>
 
-    <nav class="main-nav" role="navigation" aria-label="Main navigation">
-        <div class="nav-container">
-            <button class="nav-tab active" data-section="recipes" aria-label="View recipes">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M6 2h8v2H6V2zm0 4h8v2H6V6zm0 4h8v2H6v-2zm-4 4h16v6H2v-6z"/>
-                </svg>
-                Recipes
-            </button>
-            <button class="nav-tab" data-section="store" aria-label="View store">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M3 1h14l1 6H2L3 1zm-1 8h16v10H2V9zm3 2v6h2v-6H5zm4 0v6h2v-6H9zm4 0v6h2v-6h-2z"/>
-                </svg>
-                Store
-            </button>
+            <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                <button class="nav-link active" data-section="recipes" aria-label="View recipes">
+                    Recipes
+                </button>
+                <button class="nav-link" data-section="store" aria-label="View store">
+                    Store
+                </button>
+            </nav>
         </div>
-    </nav>
+    </header>
 
     <main>
         <!-- Recipes Section -->
