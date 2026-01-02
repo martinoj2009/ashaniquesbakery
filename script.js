@@ -1,6 +1,9 @@
 // Main application state
 let productsData = [];
 let currentProducts = [];
+let recipesData = [];
+let currentRecipes = [];
+let currentSection = 'recipes'; // Default section
 
 // DOM elements
 const elements = {
@@ -8,6 +11,10 @@ const elements = {
     searchBar: null,
     sortDropdown: null,
     loading: null,
+    recipeList: null,
+    recipeSearchBar: null,
+    recipeCategoryFilter: null,
+    recipeLoading: null,
 };
 
 // Initialize the application
@@ -17,37 +24,67 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.searchBar = document.getElementById('searchBar');
     elements.sortDropdown = document.getElementById('sortDropdown');
     elements.loading = document.getElementById('loading');
+    elements.recipeList = document.getElementById('recipe-list');
+    elements.recipeSearchBar = document.getElementById('recipeSearchBar');
+    elements.recipeCategoryFilter = document.getElementById('recipeCategoryFilter');
+    elements.recipeLoading = document.getElementById('recipe-loading');
 
     try {
-        showLoading(true);
-        const response = await fetch('data.json');
+        // Load products and recipes in parallel
+        const [productsResponse, recipesResponse] = await Promise.all([
+            fetch('data.json'),
+            fetch('recipes.json')
+        ]);
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        if (!productsResponse.ok || !recipesResponse.ok) {
+            throw new Error('Failed to load data');
         }
 
-        const data = await response.json();
-        productsData = data.products;
+        const [productsJson, recipesJson] = await Promise.all([
+            productsResponse.json(),
+            recipesResponse.json()
+        ]);
+
+        productsData = productsJson.products;
         currentProducts = [...productsData];
 
-        renderProducts(currentProducts);
+        recipesData = recipesJson.recipes;
+        currentRecipes = [...recipesData];
+
+        // Render recipes first (default section)
+        renderRecipes(currentRecipes);
+
         setupEventListeners();
-        showLoading(false);
 
         // Add fade-in animation
         requestAnimationFrame(() => {
-            elements.productList.classList.add('fade-in');
+            elements.recipeList.classList.add('fade-in');
         });
     } catch (error) {
-        console.error('Error loading products:', error);
-        showError('Failed to load products. Please try again later.');
-        showLoading(false);
+        console.error('Error loading data:', error);
+        showError('Failed to load content. Please try again later.', 'recipe');
     }
 });
 
 // Setup all event listeners
 function setupEventListeners() {
-    // Search functionality with debouncing
+    // Navigation tabs
+    const navTabs = document.querySelectorAll('.nav-tab');
+    navTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => switchSection(e.target.dataset.section));
+    });
+
+    // Recipe search functionality with debouncing
+    let recipeSearchTimeout;
+    elements.recipeSearchBar.addEventListener('input', (event) => {
+        clearTimeout(recipeSearchTimeout);
+        recipeSearchTimeout = setTimeout(() => filterRecipes(event), 300);
+    });
+
+    // Recipe category filter
+    elements.recipeCategoryFilter.addEventListener('change', filterRecipes);
+
+    // Product search functionality with debouncing
     let searchTimeout;
     elements.searchBar.addEventListener('input', (event) => {
         clearTimeout(searchTimeout);
@@ -60,7 +97,7 @@ function setupEventListeners() {
     // Event delegation for product cards
     elements.productList.addEventListener('click', (event) => {
         const card = event.target.closest('.product-card');
-        if (card) {
+        if (card && !card.classList.contains('recipe-card')) {
             const productId = parseInt(card.dataset.productId);
             const product = productsData.find(p => p.id === productId);
             if (product) {
@@ -69,10 +106,33 @@ function setupEventListeners() {
         }
     });
 
+    // Event delegation for recipe cards
+    elements.recipeList.addEventListener('click', (event) => {
+        const card = event.target.closest('.recipe-card');
+        if (card) {
+            const recipeId = parseInt(card.dataset.recipeId);
+            const recipe = recipesData.find(r => r.id === recipeId);
+            if (recipe) {
+                openRecipeModal(recipe);
+            }
+        }
+    });
+
     // Keyboard navigation for product cards
     elements.productList.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
             const card = event.target.closest('.product-card');
+            if (card) {
+                event.preventDefault();
+                card.click();
+            }
+        }
+    });
+
+    // Keyboard navigation for recipe cards
+    elements.recipeList.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            const card = event.target.closest('.recipe-card');
             if (card) {
                 event.preventDefault();
                 card.click();
@@ -288,8 +348,9 @@ function showLoading(show) {
 }
 
 // Show error message
-function showError(message) {
-    elements.productList.innerHTML = `
+function showError(message, section = 'product') {
+    const targetList = section === 'recipe' ? elements.recipeList : elements.productList;
+    targetList.innerHTML = `
         <div class="error-message">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="currentColor">
                 <path d="M24 4C12.96 4 4 12.96 4 24s8.96 20 20 20 20-8.96 20-20S35.04 4 24 4zm2 30h-4v-4h4v4zm0-8h-4V14h4v12z"/>
@@ -297,4 +358,243 @@ function showError(message) {
             <p>${escapeHtml(message)}</p>
         </div>
     `;
+}
+
+// Switch between sections
+function switchSection(section) {
+    currentSection = section;
+
+    // Update nav tabs
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+        if (tab.dataset.section === section) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+
+    // Update content sections
+    document.querySelectorAll('.content-section').forEach(contentSection => {
+        if (contentSection.id === `${section}-section`) {
+            contentSection.classList.add('active');
+        } else {
+            contentSection.classList.remove('active');
+        }
+    });
+
+    // Load products if switching to store and not yet loaded
+    if (section === 'store' && elements.productList.innerHTML === '') {
+        renderProducts(currentProducts);
+        requestAnimationFrame(() => {
+            elements.productList.classList.add('fade-in');
+        });
+    }
+}
+
+// Render recipes to the DOM
+function renderRecipes(recipes) {
+    if (!recipes || recipes.length === 0) {
+        elements.recipeList.innerHTML = `
+            <div class="no-results">
+                <p>No recipes found.</p>
+            </div>
+        `;
+        return;
+    }
+
+    elements.recipeList.innerHTML = recipes.map(recipe => {
+        return `
+            <article
+                class="recipe-card product-card"
+                data-recipe-id="${recipe.id}"
+                role="listitem"
+                tabindex="0"
+                aria-label="${recipe.name}, ${recipe.category}">
+                <div class="product-image-container">
+                    <img
+                        class="product-image"
+                        src="${escapeHtml(recipe.image)}"
+                        alt="${escapeHtml(recipe.name)}"
+                        loading="lazy">
+                    <span class="recipe-badge ${recipe.difficulty.toLowerCase()}">${escapeHtml(recipe.difficulty)}</span>
+                </div>
+                <div class="product-info">
+                    <h3>${escapeHtml(recipe.name)}</h3>
+                    <p class="recipe-category">${escapeHtml(recipe.category)}</p>
+                    <div class="recipe-meta">
+                        <span class="recipe-time">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                                <path d="M7 0a7 7 0 1 0 0 14A7 7 0 0 0 7 0zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 7 1zm-.5 2v4.5l3 1.5.5-1-2.5-1.25V3h-1z"/>
+                            </svg>
+                            ${escapeHtml(recipe.totalTime)}
+                        </span>
+                        <span class="recipe-servings">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                                <path d="M7 3a1 1 0 0 1 1 1v5a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm-4 .5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm8 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zM2 10h10v2H2v-2z"/>
+                            </svg>
+                            ${escapeHtml(recipe.servings)}
+                        </span>
+                    </div>
+                </div>
+            </article>
+        `;
+    }).join('');
+}
+
+// Filter recipes based on search term and category
+function filterRecipes(event) {
+    const searchTerm = elements.recipeSearchBar.value.toLowerCase().trim();
+    const selectedCategory = elements.recipeCategoryFilter.value;
+
+    currentRecipes = recipesData.filter(recipe => {
+        const matchesSearch = recipe.name.toLowerCase().includes(searchTerm) ||
+                            recipe.description.toLowerCase().includes(searchTerm) ||
+                            recipe.category.toLowerCase().includes(searchTerm);
+
+        const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    renderRecipes(currentRecipes);
+}
+
+// Open recipe modal
+function openRecipeModal(recipe) {
+    const modal = document.createElement('div');
+    modal.className = 'modal recipe-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-labelledby', 'recipe-modal-title');
+    modal.setAttribute('aria-modal', 'true');
+
+    modal.innerHTML = `
+        <div class="modal-content recipe-modal-content">
+            <button class="close-button" aria-label="Close modal">×</button>
+            <img class="product-image" src="${escapeHtml(recipe.image)}" alt="${escapeHtml(recipe.name)}">
+
+            <div class="recipe-header">
+                <h2 id="recipe-modal-title">${escapeHtml(recipe.name)}</h2>
+                <div class="recipe-badges">
+                    <span class="badge ${recipe.difficulty.toLowerCase()}">${escapeHtml(recipe.difficulty)}</span>
+                    <span class="badge category">${escapeHtml(recipe.category)}</span>
+                </div>
+            </div>
+
+            <p class="product-description">${escapeHtml(recipe.description)}</p>
+
+            <div class="recipe-info-grid">
+                <div class="recipe-info-item">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 1a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm-.5 2v5l3.5 2 .5-1-3-1.75V5h-1z"/>
+                    </svg>
+                    <div>
+                        <strong>Prep Time</strong>
+                        <span>${escapeHtml(recipe.prepTime)}</span>
+                    </div>
+                </div>
+                <div class="recipe-info-item">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M4 2v16h12V2H4zm1 1h10v14H5V3zm2 2v2h6V5H7zm0 3v2h6V8H7zm0 3v2h6v-2H7z"/>
+                    </svg>
+                    <div>
+                        <strong>Cook Time</strong>
+                        <span>${escapeHtml(recipe.cookTime)}</span>
+                    </div>
+                </div>
+                <div class="recipe-info-item">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 1a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm-.5 2v5.5l4 2 .5-1-3.5-1.75V5h-1z"/>
+                    </svg>
+                    <div>
+                        <strong>Total Time</strong>
+                        <span>${escapeHtml(recipe.totalTime)}</span>
+                    </div>
+                </div>
+                <div class="recipe-info-item">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 5a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-3 0v-6A1.5 1.5 0 0 1 10 5zM5 6a1 1 0 0 1 1 1v5a1 1 0 0 1-2 0V7a1 1 0 0 1 1-1zm10 0a1 1 0 0 1 1 1v5a1 1 0 0 1-2 0V7a1 1 0 0 1 1-1zM3 14h14v3H3v-3z"/>
+                    </svg>
+                    <div>
+                        <strong>Servings</strong>
+                        <span>${escapeHtml(recipe.servings)}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-section">
+                <h3>Ingredients</h3>
+                <ul class="ingredients-list">
+                    ${recipe.ingredients.map(ingredient => `
+                        <li>${escapeHtml(ingredient)}</li>
+                    `).join('')}
+                </ul>
+            </div>
+
+            <div class="recipe-section">
+                <h3>Instructions</h3>
+                <ol class="instructions-list">
+                    ${recipe.instructions.map(instruction => `
+                        <li>${escapeHtml(instruction)}</li>
+                    `).join('')}
+                </ol>
+            </div>
+
+            ${recipe.tips && recipe.tips.length > 0 ? `
+                <div class="recipe-section">
+                    <h3>Tips</h3>
+                    <ul class="tips-list">
+                        ${recipe.tips.map(tip => `
+                            <li>${escapeHtml(tip)}</li>
+                        `).join('')}
+                    </ul>
+                </div>
+            ` : ''}
+
+            <div class="modal-actions">
+                <button class="cancel-button">Close</button>
+            </div>
+        </div>
+    `;
+
+    // Show modal with animation
+    document.body.appendChild(modal);
+    requestAnimationFrame(() => {
+        modal.style.display = 'flex';
+        modal.classList.add('modal-open');
+    });
+
+    // Focus trap and close handlers
+    const closeButton = modal.querySelector('.close-button');
+    const cancelButton = modal.querySelector('.cancel-button');
+
+    // Close modal function
+    const closeModal = () => {
+        modal.classList.add('modal-closing');
+        setTimeout(() => {
+            modal.remove();
+            // Return focus to the recipe card
+            const card = document.querySelector(`[data-recipe-id="${recipe.id}"]`);
+            if (card) card.focus();
+        }, 300);
+    };
+
+    // Event listeners for closing
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    closeButton.addEventListener('click', closeModal);
+    cancelButton.addEventListener('click', closeModal);
+
+    // Escape key to close
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+            document.removeEventListener('keydown', handleEscape);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
+
+    // Focus the close button
+    setTimeout(() => closeButton.focus(), 100);
 }

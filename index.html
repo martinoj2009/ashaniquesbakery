@@ -19,31 +19,79 @@
         <p class="bakery-tagline">Fresh Homemade Cakes & Desserts</p>
     </header>
 
+    <nav class="main-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <button class="nav-tab active" data-section="recipes" aria-label="View recipes">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M6 2h8v2H6V2zm0 4h8v2H6V6zm0 4h8v2H6v-2zm-4 4h16v6H2v-6z"/>
+                </svg>
+                Recipes
+            </button>
+            <button class="nav-tab" data-section="store" aria-label="View store">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M3 1h14l1 6H2L3 1zm-1 8h16v10H2V9zm3 2v6h2v-6H5zm4 0v6h2v-6H9zm4 0v6h2v-6h-2z"/>
+                </svg>
+                Store
+            </button>
+        </div>
+    </nav>
+
     <main>
-        <div class="controls">
-            <label for="searchBar" class="sr-only">Search products</label>
-            <input
-                type="text"
-                id="searchBar"
-                placeholder="Search products..."
-                class="search-input"
-                aria-label="Search products">
+        <!-- Recipes Section -->
+        <section id="recipes-section" class="content-section active">
+            <div class="controls">
+                <label for="recipeSearchBar" class="sr-only">Search recipes</label>
+                <input
+                    type="text"
+                    id="recipeSearchBar"
+                    placeholder="Search recipes..."
+                    class="search-input"
+                    aria-label="Search recipes">
 
-            <label for="sortDropdown" class="sr-only">Sort products</label>
-            <select id="sortDropdown" class="sort-select" aria-label="Sort products">
-                <option value="name-asc">Name (A-Z)</option>
-                <option value="name-desc">Name (Z-A)</option>
-                <option value="price-asc">Price (Low to High)</option>
-                <option value="price-desc">Price (High to Low)</option>
-            </select>
-        </div>
+                <label for="recipeCategoryFilter" class="sr-only">Filter by category</label>
+                <select id="recipeCategoryFilter" class="sort-select" aria-label="Filter recipes by category">
+                    <option value="all">All Categories</option>
+                    <option value="Cookies">Cookies</option>
+                    <option value="Frosting">Frosting</option>
+                    <option value="Basics">Basics</option>
+                </select>
+            </div>
 
-        <div id="product-list" class="product-grid" role="list"></div>
+            <div id="recipe-list" class="product-grid" role="list"></div>
 
-        <div id="loading" class="loading" hidden>
-            <div class="spinner"></div>
-            <p>Loading delicious treats...</p>
-        </div>
+            <div id="recipe-loading" class="loading" hidden>
+                <div class="spinner"></div>
+                <p>Loading delicious recipes...</p>
+            </div>
+        </section>
+
+        <!-- Store Section -->
+        <section id="store-section" class="content-section">
+            <div class="controls">
+                <label for="searchBar" class="sr-only">Search products</label>
+                <input
+                    type="text"
+                    id="searchBar"
+                    placeholder="Search products..."
+                    class="search-input"
+                    aria-label="Search products">
+
+                <label for="sortDropdown" class="sr-only">Sort products</label>
+                <select id="sortDropdown" class="sort-select" aria-label="Sort products">
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="price-asc">Price (Low to High)</option>
+                    <option value="price-desc">Price (High to Low)</option>
+                </select>
+            </div>
+
+            <div id="product-list" class="product-grid" role="list"></div>
+
+            <div id="loading" class="loading" hidden>
+                <div class="spinner"></div>
+                <p>Loading delicious treats...</p>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
