@@ -15,15 +15,15 @@
         {
           "name": "Cookies",
           "ingredients": [
-            "2 1/4 cups all-purpose flour",
-            "1 tsp baking soda",
-            "1 tsp salt",
-            "1 cup (2 sticks) butter, softened",
-            "3/4 cup granulated sugar",
-            "3/4 cup packed brown sugar",
-            "2 large eggs",
-            "2 tsp vanilla extract",
-            "2 cups semi-sweet chocolate chips"
+            { "value": "2 1/4", "measurement": "cups", "name": "all-purpose flour" },
+            { "value": "1", "measurement": "tsp", "name": "baking soda" },
+            { "value": "1", "measurement": "tsp", "name": "salt" },
+            { "value": "1", "measurement": "cup", "name": "butter, softened (2 sticks)" },
+            { "value": "3/4", "measurement": "cup", "name": "granulated sugar" },
+            { "value": "3/4", "measurement": "cup", "name": "packed brown sugar" },
+            { "value": "2", "measurement": "large", "name": "eggs" },
+            { "value": "2", "measurement": "tsp", "name": "vanilla extract" },
+            { "value": "2", "measurement": "cups", "name": "semi-sweet chocolate chips" }
           ],
           "instructions": [
             "Preheat oven to 375°F (190°C).",
@@ -60,17 +60,17 @@
         {
           "name": "Cake",
           "ingredients": [
-            "2 1/2 cups all-purpose flour",
-            "1 1/2 cups granulated sugar",
-            "1 tsp baking soda",
-            "1 tsp salt",
-            "1 tsp cocoa powder",
-            "1 1/2 cups vegetable oil",
-            "1 cup buttermilk, room temperature",
-            "2 large eggs, room temperature",
-            "2 tbsp red food coloring",
-            "1 tsp white vinegar",
-            "1 tsp vanilla extract"
+            { "value": "2 1/2", "measurement": "cups", "name": "all-purpose flour" },
+            { "value": "1 1/2", "measurement": "cups", "name": "granulated sugar" },
+            { "value": "1", "measurement": "tsp", "name": "baking soda" },
+            { "value": "1", "measurement": "tsp", "name": "salt" },
+            { "value": "1", "measurement": "tsp", "name": "cocoa powder" },
+            { "value": "1 1/2", "measurement": "cups", "name": "vegetable oil" },
+            { "value": "1", "measurement": "cup", "name": "buttermilk, room temperature" },
+            { "value": "2", "measurement": "large", "name": "eggs, room temperature" },
+            { "value": "2", "measurement": "tbsp", "name": "red food coloring" },
+            { "value": "1", "measurement": "tsp", "name": "white vinegar" },
+            { "value": "1", "measurement": "tsp", "name": "vanilla extract" }
           ],
           "instructions": [
             "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round cake pans.",
@@ -85,11 +85,11 @@
         {
           "name": "Cream Cheese Frosting",
           "ingredients": [
-            "1 lb (16 oz) cream cheese, softened",
-            "1 cup (2 sticks) unsalted butter, softened",
-            "4 cups powdered sugar",
-            "2 tsp vanilla extract",
-            "Pinch of salt"
+            { "value": "16", "measurement": "oz", "name": "cream cheese, softened (1 lb)" },
+            { "value": "1", "measurement": "cup", "name": "unsalted butter, softened (2 sticks)" },
+            { "value": "4", "measurement": "cups", "name": "powdered sugar" },
+            { "value": "2", "measurement": "tsp", "name": "vanilla extract" },
+            { "value": "1", "measurement": "pinch", "name": "salt" }
           ],
           "instructions": [
             "Beat cream cheese and butter together until smooth and fluffy (3-4 minutes).",
@@ -121,11 +121,11 @@
         {
           "name": "Pie Crust",
           "ingredients": [
-            "2 1/2 cups all-purpose flour",
-            "1 tsp salt",
-            "1 tbsp granulated sugar",
-            "1 cup (2 sticks) cold unsalted butter, cut into small cubes",
-            "6-8 tbsp ice water"
+            { "value": "2 1/2", "measurement": "cups", "name": "all-purpose flour" },
+            { "value": "1", "measurement": "tsp", "name": "salt" },
+            { "value": "1", "measurement": "tbsp", "name": "granulated sugar" },
+            { "value": "1", "measurement": "cup", "name": "cold unsalted butter, cut into small cubes (2 sticks)" },
+            { "value": "6-8", "measurement": "tbsp", "name": "ice water" }
           ],
           "instructions": [
             "In a large bowl, whisk together flour, salt, and sugar.",
@@ -162,19 +162,19 @@
         {
           "name": "Carrot Cake",
           "ingredients": [
-            "2 cups all-purpose flour",
-            "2 tsp baking powder",
-            "1 1/2 tsp baking soda",
-            "1 tsp salt",
-            "2 tsp ground cinnamon",
-            "1/2 tsp ground nutmeg",
-            "1/2 tsp ground ginger",
-            "1 1/2 cups vegetable oil",
-            "2 cups granulated sugar",
-            "4 large eggs",
-            "3 cups grated carrots (about 6 medium carrots)",
-            "1 cup chopped walnuts",
-            "1 cup crushed pineapple, drained"
+            { "value": "2", "measurement": "cups", "name": "all-purpose flour" },
+            { "value": "2", "measurement": "tsp", "name": "baking powder" },
+            { "value": "1 1/2", "measurement": "tsp", "name": "baking soda" },
+            { "value": "1", "measurement": "tsp", "name": "salt" },
+            { "value": "2", "measurement": "tsp", "name": "ground cinnamon" },
+            { "value": "1/2", "measurement": "tsp", "name": "ground nutmeg" },
+            { "value": "1/2", "measurement": "tsp", "name": "ground ginger" },
+            { "value": "1 1/2", "measurement": "cups", "name": "vegetable oil" },
+            { "value": "2", "measurement": "cups", "name": "granulated sugar" },
+            { "value": "4", "measurement": "large", "name": "eggs" },
+            { "value": "3", "measurement": "cups", "name": "grated carrots (about 6 medium carrots)" },
+            { "value": "1", "measurement": "cup", "name": "chopped walnuts" },
+            { "value": "1", "measurement": "cup", "name": "crushed pineapple, drained" }
           ],
           "instructions": [
             "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round pans.",
@@ -191,11 +191,11 @@
         {
           "name": "Cream Cheese Frosting",
           "ingredients": [
-            "12 oz cream cheese, softened",
-            "3/4 cup unsalted butter, softened",
-            "4 cups powdered sugar",
-            "1 tsp vanilla extract",
-            "1/4 tsp salt"
+            { "value": "12", "measurement": "oz", "name": "cream cheese, softened" },
+            { "value": "3/4", "measurement": "cup", "name": "unsalted butter, softened" },
+            { "value": "4", "measurement": "cups", "name": "powdered sugar" },
+            { "value": "1", "measurement": "tsp", "name": "vanilla extract" },
+            { "value": "1/4", "measurement": "tsp", "name": "salt" }
           ],
           "instructions": [
             "Beat cream cheese and butter until smooth and creamy.",

@@ -476,7 +476,7 @@ function openRecipeModal(recipe) {
                 <h4>Ingredients</h4>
                 <ul class="ingredients-list">
                     ${section.ingredients.map(ingredient => `
-                        <li>${escapeHtml(ingredient)}</li>
+                        <li>${escapeHtml(ingredient.value)} ${escapeHtml(ingredient.measurement)} ${escapeHtml(ingredient.name)}</li>
                     `).join('')}
                 </ul>
             </div>
