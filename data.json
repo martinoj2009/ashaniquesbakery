@@ -70,7 +70,7 @@
           "id": 4,
           "name": "Carrot Cake",
           "description": "A moist carrot cake topped with cream cheese frosting.",
-          "image": "images/carrotcake.jpg",
+          "image": "images/placeholder.svg",
           "variations": [
               {
                   "sku": "CARROT-WHOLE",
@@ -90,7 +90,7 @@
           "id": 5,
           "name": "Chocolate Cake",
           "description": "A decadent chocolate cake with rich chocolate frosting.",
-          "image": "images/chocolatecake.jpg",
+          "image": "images/placeholder.svg",
           "variations": [
               {
                   "sku": "CHOCOLATE-WHOLE",
@@ -110,7 +110,7 @@
           "id": 6,
           "name": "German Chocolate Cake",
           "description": "A classic German chocolate cake with coconut-pecan frosting.",
-          "image": "images/germanchocolate.jpg",
+          "image": "images/placeholder.svg",
           "variations": [
               {
                   "sku": "GERMAN-WHOLE",
@@ -130,7 +130,7 @@
           "id": 7,
           "name": "Red Velvet Cake",
           "description": "A classic red velvet cake with cream cheese frosting.",
-          "image": "images/redvelvet.jpg",
+          "image": "images/placeholder.svg",
           "variations": [
               {
                   "sku": "REDVELVET-WHOLE",
@@ -150,7 +150,7 @@
           "id": 8,
           "name": "Strawberry Cake",
           "description": "A delightful strawberry cake with fresh strawberry frosting.",
-          "image": "images/strawberrycake.jpg",
+          "image": "images/placeholder.svg",
           "variations": [
               {
                   "sku": "STRAWBERRY-WHOLE",
@@ -170,7 +170,7 @@
           "id": 9,
           "name": "Berry Chantilly Cake",
           "description": "A light and fluffy cake with fresh berries and Chantilly cream.",
-          "image": "images/berrychantilly.jpg",
+          "image": "images/placeholder.svg",
           "variations": [
               {
                   "sku": "CHANTILLY-WHOLE",
