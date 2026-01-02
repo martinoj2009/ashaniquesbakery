@@ -11,28 +11,33 @@
       "servings": "24 cookies",
       "image": "images/placeholder.svg",
       "description": "Soft, chewy chocolate chip cookies with the perfect balance of sweet and buttery flavors. A timeless classic that everyone loves!",
-      "ingredients": [
-        "2 1/4 cups all-purpose flour",
-        "1 tsp baking soda",
-        "1 tsp salt",
-        "1 cup (2 sticks) butter, softened",
-        "3/4 cup granulated sugar",
-        "3/4 cup packed brown sugar",
-        "2 large eggs",
-        "2 tsp vanilla extract",
-        "2 cups semi-sweet chocolate chips"
-      ],
-      "instructions": [
-        "Preheat oven to 375°F (190°C).",
-        "In a small bowl, combine flour, baking soda, and salt. Set aside.",
-        "In a large bowl, beat butter, granulated sugar, and brown sugar until creamy.",
-        "Add eggs and vanilla extract to the butter mixture. Beat well.",
-        "Gradually blend in the flour mixture.",
-        "Stir in chocolate chips.",
-        "Drop rounded tablespoons of dough onto ungreased cookie sheets.",
-        "Bake for 9-11 minutes or until golden brown.",
-        "Cool on baking sheet for 2 minutes, then remove to a wire rack.",
-        "Enjoy warm or store in an airtight container."
+      "sections": [
+        {
+          "name": "Cookies",
+          "ingredients": [
+            "2 1/4 cups all-purpose flour",
+            "1 tsp baking soda",
+            "1 tsp salt",
+            "1 cup (2 sticks) butter, softened",
+            "3/4 cup granulated sugar",
+            "3/4 cup packed brown sugar",
+            "2 large eggs",
+            "2 tsp vanilla extract",
+            "2 cups semi-sweet chocolate chips"
+          ],
+          "instructions": [
+            "Preheat oven to 375°F (190°C).",
+            "In a small bowl, combine flour, baking soda, and salt. Set aside.",
+            "In a large bowl, beat butter, granulated sugar, and brown sugar until creamy.",
+            "Add eggs and vanilla extract to the butter mixture. Beat well.",
+            "Gradually blend in the flour mixture.",
+            "Stir in chocolate chips.",
+            "Drop rounded tablespoons of dough onto ungreased cookie sheets.",
+            "Bake for 9-11 minutes or until golden brown.",
+            "Cool on baking sheet for 2 minutes, then remove to a wire rack.",
+            "Enjoy warm or store in an airtight container."
+          ]
+        }
       ],
       "tips": [
         "For extra chewy cookies, slightly underbake them.",
@@ -42,35 +47,63 @@
     },
     {
       "id": 2,
-      "name": "Vanilla Buttercream Frosting",
-      "category": "Frosting",
-      "difficulty": "Easy",
-      "prepTime": "10 minutes",
-      "cookTime": "0 minutes",
-      "totalTime": "10 minutes",
-      "servings": "Frosts one 9-inch layer cake",
+      "name": "Red Velvet Cake with Cream Cheese Frosting",
+      "category": "Cakes",
+      "difficulty": "Medium",
+      "prepTime": "25 minutes",
+      "cookTime": "30 minutes",
+      "totalTime": "55 minutes (plus cooling)",
+      "servings": "12 slices",
       "image": "images/placeholder.svg",
-      "description": "Smooth, creamy, and perfectly sweet vanilla buttercream that's ideal for cakes, cupcakes, and cookies.",
-      "ingredients": [
-        "1 cup (2 sticks) unsalted butter, softened",
-        "4 cups powdered sugar",
-        "2 tsp vanilla extract",
-        "3-4 tbsp heavy cream or milk",
-        "Pinch of salt"
-      ],
-      "instructions": [
-        "Beat the softened butter in a large bowl until creamy and smooth (about 2-3 minutes).",
-        "Gradually add powdered sugar, one cup at a time, beating on low speed.",
-        "Add vanilla extract and salt.",
-        "Add heavy cream one tablespoon at a time until you reach desired consistency.",
-        "Increase speed to medium-high and beat for 3-4 minutes until light and fluffy.",
-        "Use immediately or store in refrigerator for up to 2 weeks."
+      "description": "A stunning red velvet cake with a subtle cocoa flavor, paired with rich and tangy cream cheese frosting.",
+      "sections": [
+        {
+          "name": "Cake",
+          "ingredients": [
+            "2 1/2 cups all-purpose flour",
+            "1 1/2 cups granulated sugar",
+            "1 tsp baking soda",
+            "1 tsp salt",
+            "1 tsp cocoa powder",
+            "1 1/2 cups vegetable oil",
+            "1 cup buttermilk, room temperature",
+            "2 large eggs, room temperature",
+            "2 tbsp red food coloring",
+            "1 tsp white vinegar",
+            "1 tsp vanilla extract"
+          ],
+          "instructions": [
+            "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round cake pans.",
+            "In a large bowl, sift together flour, sugar, baking soda, salt, and cocoa powder.",
+            "In another bowl, whisk together oil, buttermilk, eggs, food coloring, vinegar, and vanilla.",
+            "Pour wet ingredients into dry ingredients and mix until smooth.",
+            "Divide batter evenly between prepared pans.",
+            "Bake for 30-35 minutes or until a toothpick inserted in center comes out clean.",
+            "Cool in pans for 10 minutes, then turn out onto wire racks to cool completely."
+          ]
+        },
+        {
+          "name": "Cream Cheese Frosting",
+          "ingredients": [
+            "1 lb (16 oz) cream cheese, softened",
+            "1 cup (2 sticks) unsalted butter, softened",
+            "4 cups powdered sugar",
+            "2 tsp vanilla extract",
+            "Pinch of salt"
+          ],
+          "instructions": [
+            "Beat cream cheese and butter together until smooth and fluffy (3-4 minutes).",
+            "Add vanilla extract and salt.",
+            "Gradually add powdered sugar, one cup at a time, beating on low speed.",
+            "Increase speed to medium-high and beat for 2-3 minutes until light and fluffy.",
+            "Once cakes are completely cool, frost between layers, on top, and around sides."
+          ]
+        }
       ],
       "tips": [
-        "Make sure butter is at room temperature for best results.",
-        "Add more cream for a softer frosting, less for stiffer frosting.",
-        "Add food coloring after achieving desired consistency.",
-        "For chocolate buttercream, add 1/2 cup cocoa powder with the powdered sugar."
+        "Make sure all ingredients are at room temperature for best results.",
+        "Don't overbake - the cake should be moist.",
+        "Chill the frosted cake for 30 minutes before slicing for cleaner cuts."
       ]
     },
     {
@@ -84,23 +117,28 @@
       "servings": "Two 9-inch pie crusts",
       "image": "images/placeholder.svg",
       "description": "Flaky, buttery pie crust made from scratch. Perfect for both sweet and savory pies.",
-      "ingredients": [
-        "2 1/2 cups all-purpose flour",
-        "1 tsp salt",
-        "1 tbsp granulated sugar",
-        "1 cup (2 sticks) cold unsalted butter, cut into small cubes",
-        "6-8 tbsp ice water"
-      ],
-      "instructions": [
-        "In a large bowl, whisk together flour, salt, and sugar.",
-        "Add cold butter cubes to the flour mixture.",
-        "Using a pastry cutter or your fingers, work the butter into the flour until it resembles coarse crumbs with pea-sized pieces of butter.",
-        "Sprinkle ice water over the mixture, one tablespoon at a time, mixing gently with a fork.",
-        "Continue adding water until the dough just starts to come together.",
-        "Divide dough in half and form into two flat disks.",
-        "Wrap each disk in plastic wrap and refrigerate for at least 1 hour.",
-        "When ready to use, roll out on a floured surface to desired thickness.",
-        "Use for your favorite pie recipe!"
+      "sections": [
+        {
+          "name": "Pie Crust",
+          "ingredients": [
+            "2 1/2 cups all-purpose flour",
+            "1 tsp salt",
+            "1 tbsp granulated sugar",
+            "1 cup (2 sticks) cold unsalted butter, cut into small cubes",
+            "6-8 tbsp ice water"
+          ],
+          "instructions": [
+            "In a large bowl, whisk together flour, salt, and sugar.",
+            "Add cold butter cubes to the flour mixture.",
+            "Using a pastry cutter or your fingers, work the butter into the flour until it resembles coarse crumbs with pea-sized pieces of butter.",
+            "Sprinkle ice water over the mixture, one tablespoon at a time, mixing gently with a fork.",
+            "Continue adding water until the dough just starts to come together.",
+            "Divide dough in half and form into two flat disks.",
+            "Wrap each disk in plastic wrap and refrigerate for at least 1 hour.",
+            "When ready to use, roll out on a floured surface to desired thickness.",
+            "Use for your favorite pie recipe!"
+          ]
+        }
       ],
       "tips": [
         "Keep everything cold - cold butter makes flakier crust.",
@@ -111,42 +149,66 @@
     },
     {
       "id": 4,
-      "name": "Simple Sugar Cookies",
-      "category": "Cookies",
-      "difficulty": "Easy",
-      "prepTime": "20 minutes",
-      "cookTime": "10 minutes",
-      "totalTime": "30 minutes (plus chill time)",
-      "servings": "30 cookies",
+      "name": "Layered Carrot Cake",
+      "category": "Cakes",
+      "difficulty": "Medium",
+      "prepTime": "30 minutes",
+      "cookTime": "35 minutes",
+      "totalTime": "1 hour 5 minutes (plus cooling)",
+      "servings": "12 slices",
       "image": "images/placeholder.svg",
-      "description": "Perfect cut-out sugar cookies that hold their shape. Ideal for decorating with royal icing for any occasion!",
-      "ingredients": [
-        "3 cups all-purpose flour",
-        "1 tsp baking powder",
-        "1/2 tsp salt",
-        "1 cup (2 sticks) unsalted butter, softened",
-        "1 1/2 cups granulated sugar",
-        "2 large eggs",
-        "2 tsp vanilla extract",
-        "1/2 tsp almond extract (optional)"
-      ],
-      "instructions": [
-        "In a medium bowl, whisk together flour, baking powder, and salt.",
-        "In a large bowl, beat butter and sugar until light and fluffy (3-4 minutes).",
-        "Beat in eggs one at a time, then add vanilla and almond extract.",
-        "Gradually mix in the flour mixture until just combined.",
-        "Divide dough in half, flatten into disks, wrap in plastic, and chill for 2 hours.",
-        "Preheat oven to 350°F (175°C).",
-        "Roll dough to 1/4-inch thickness on a floured surface.",
-        "Cut into desired shapes and place on parchment-lined baking sheets.",
-        "Bake for 8-10 minutes until edges just start to turn golden.",
-        "Cool completely before decorating."
+      "description": "Moist, spiced carrot cake with crunchy walnuts, topped with rich cream cheese frosting.",
+      "sections": [
+        {
+          "name": "Carrot Cake",
+          "ingredients": [
+            "2 cups all-purpose flour",
+            "2 tsp baking powder",
+            "1 1/2 tsp baking soda",
+            "1 tsp salt",
+            "2 tsp ground cinnamon",
+            "1/2 tsp ground nutmeg",
+            "1/2 tsp ground ginger",
+            "1 1/2 cups vegetable oil",
+            "2 cups granulated sugar",
+            "4 large eggs",
+            "3 cups grated carrots (about 6 medium carrots)",
+            "1 cup chopped walnuts",
+            "1 cup crushed pineapple, drained"
+          ],
+          "instructions": [
+            "Preheat oven to 350°F (175°C). Grease and flour two 9-inch round pans.",
+            "In a medium bowl, whisk together flour, baking powder, baking soda, salt, cinnamon, nutmeg, and ginger.",
+            "In a large bowl, beat oil and sugar together.",
+            "Add eggs one at a time, beating well after each addition.",
+            "Fold in grated carrots, walnuts, and pineapple.",
+            "Gradually add dry ingredients to wet ingredients, mixing until just combined.",
+            "Divide batter between prepared pans.",
+            "Bake for 30-35 minutes or until a toothpick comes out clean.",
+            "Cool in pans for 15 minutes, then turn out onto wire racks."
+          ]
+        },
+        {
+          "name": "Cream Cheese Frosting",
+          "ingredients": [
+            "12 oz cream cheese, softened",
+            "3/4 cup unsalted butter, softened",
+            "4 cups powdered sugar",
+            "1 tsp vanilla extract",
+            "1/4 tsp salt"
+          ],
+          "instructions": [
+            "Beat cream cheese and butter until smooth and creamy.",
+            "Add vanilla extract and salt.",
+            "Gradually add powdered sugar, beating until smooth.",
+            "Frost cooled cake layers and decorate as desired."
+          ]
+        }
       ],
       "tips": [
-        "Chilling the dough is essential for cookies that hold their shape.",
-        "Don't overbake - remove when edges just barely start to brown.",
-        "Re-roll scraps only once to prevent tough cookies.",
-        "Decorate with royal icing, buttercream, or simple glaze."
+        "Squeeze excess moisture from pineapple before adding.",
+        "Toast walnuts for extra flavor.",
+        "Cake tastes even better the next day after flavors meld."
       ]
     }
   ]
