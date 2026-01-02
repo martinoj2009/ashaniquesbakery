@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Setup all event listeners
 function setupEventListeners() {
-    // Navigation tabs
-    const navTabs = document.querySelectorAll('.nav-tab');
-    navTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => switchSection(e.target.dataset.section));
+    // Navigation links
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => switchSection(e.target.dataset.section));
     });
 
     // Recipe search functionality with debouncing
@@ -364,12 +364,12 @@ function showError(message, section = 'product') {
 function switchSection(section) {
     currentSection = section;
 
-    // Update nav tabs
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        if (tab.dataset.section === section) {
-            tab.classList.add('active');
+    // Update nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.dataset.section === section) {
+            link.classList.add('active');
         } else {
-            tab.classList.remove('active');
+            link.classList.remove('active');
         }
     });
 
