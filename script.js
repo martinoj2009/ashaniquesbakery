@@ -340,6 +340,45 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Convert decimal to fraction string for display
+function decimalToFraction(decimal) {
+    // Handle whole numbers
+    if (decimal % 1 === 0) {
+        return decimal.toString();
+    }
+
+    const tolerance = 1.0e-6;
+    const whole = Math.floor(decimal);
+    const fractional = decimal - whole;
+
+    // Common denominators for baking (prioritize simple fractions)
+    const commonDenominators = [2, 3, 4, 8, 16];
+
+    for (let denominator of commonDenominators) {
+        const numerator = Math.round(fractional * denominator);
+        const calculatedValue = numerator / denominator;
+
+        // Check if this fraction is close enough to the original value
+        if (Math.abs(calculatedValue - fractional) < tolerance) {
+            // Simplify the fraction
+            const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+            const divisor = gcd(numerator, denominator);
+            const simplifiedNum = numerator / divisor;
+            const simplifiedDen = denominator / divisor;
+
+            if (simplifiedNum === 0) {
+                return whole.toString();
+            }
+
+            const fractionStr = `${simplifiedNum}/${simplifiedDen}`;
+            return whole > 0 ? `${whole} ${fractionStr}` : fractionStr;
+        }
+    }
+
+    // Fallback: return decimal rounded to 2 places
+    return decimal.toFixed(2).replace(/\.?0+$/, '');
+}
+
 // Show/hide loading state
 function showLoading(show) {
     if (elements.loading) {
@@ -476,7 +515,7 @@ function openRecipeModal(recipe) {
                 <h4>Ingredients</h4>
                 <ul class="ingredients-list">
                     ${section.ingredients.map(ingredient => `
-                        <li>${escapeHtml(ingredient.value)} ${escapeHtml(ingredient.measurement)} ${escapeHtml(ingredient.name)}</li>
+                        <li>${decimalToFraction(ingredient.value)} ${escapeHtml(ingredient.measurement)} ${escapeHtml(ingredient.name)}</li>
                     `).join('')}
                 </ul>
             </div>
