@@ -210,6 +210,79 @@
         "Toast walnuts for extra flavor.",
         "Cake tastes even better the next day after flavors meld."
       ]
+    },
+    {
+      "id": 5,
+      "name": "Cinnamon Rolls",
+      "category": "Pastries",
+      "difficulty": "Easy",
+      "prepTime": "15 minutes",
+      "cookTime": "20 minutes",
+      "totalTime": "3 hours 5 minutes",
+      "servings": "12 rolls",
+      "image": "images/placeholder.svg",
+      "description": "This easy cinnamon roll recipe bakes perfectly gooey and soft rolls. Tender and fluffy dough is swirled with sweet cinnamon brown sugar and topped with sweet cream cheese icing for the best cinnamon rolls!",
+      "sections": [
+        {
+          "name": "Dough",
+          "ingredients": [
+            { "value": 1, "measurement": "cup", "name": "warm milk (110-120°F)" },
+            { "value": 5, "measurement": "tbsp", "name": "granulated sugar" },
+            { "value": 2.25, "measurement": "tsp", "name": "active dry yeast (.25oz/7g packet)" },
+            { "value": 4.666667, "measurement": "cups", "name": "all-purpose flour, plus more for dusting" },
+            { "value": 0.333333, "measurement": "cup", "name": "packed light brown sugar" },
+            { "value": 0.5, "measurement": "cup", "name": "unsalted butter, melted" },
+            { "value": 1, "measurement": "large", "name": "egg, room temperature" },
+            { "value": 1, "measurement": "tbsp", "name": "vanilla extract" },
+            { "value": 1.5, "measurement": "tsp", "name": "salt" },
+            { "value": 0.5, "measurement": "tsp", "name": "cinnamon" }
+          ],
+          "instructions": [
+            "In a large mixing bowl or the bowl of a stand mixer fitted with the dough hook attachment, stir together the warm milk, granulated sugar, and yeast. Let stand until foamy, about 5 minutes.",
+            "Add the remaining ingredients. Begin mixing on low speed until the mixture starts to come together. Increase the speed to medium-low and continue kneading until the dough is springy and tacky to the touch but doesn't stick to your fingers, 8 to 10 minutes.",
+            "Transfer the dough to a lightly oiled large bowl. Cover and let rise in a warm place (about 75°F) until doubled in size, about 1½ to 2 hours.",
+            "Lightly grease a 9×13-inch baking pan with butter or baking spray.",
+            "Turn out the dough onto a well-floured surface. Roll the dough into roughly a 12×24-inch rectangle."
+          ]
+        },
+        {
+          "name": "Filling",
+          "ingredients": [
+            { "value": 6, "measurement": "tbsp", "name": "unsalted butter, room temperature" },
+            { "value": 0.5, "measurement": "cup", "name": "light brown sugar" },
+            { "value": 1.5, "measurement": "tbsp", "name": "cinnamon" }
+          ],
+          "instructions": [
+            "Spread the butter onto the dough in a thin and even layer, leaving a ½-inch border down one long side of the dough. (Make sure your butter is very soft! If it's still firm, microwave it in 5-second increments until easily spreadable.)",
+            "In a small bowl, stir together the sugar and cinnamon. Sprinkle the cinnamon sugar all over the butter.",
+            "Starting at one long end opposite the unbuttered border, roll up the dough into a tight log. Cut the log into 12 equal pieces (about 2 inches wide) using a sharp serrated knife or unflavored dental floss.",
+            "Place the rolls cut side down evenly spaced in the prepared baking dish. Loosely cover and let rise in a warm place until almost doubled in size, about 1 hour.",
+            "Preheat the oven to 350°F while rising.",
+            "Uncover and bake for 20 to 25 minutes or until lightly browned on top. Place on a wire rack to cool."
+          ]
+        },
+        {
+          "name": "Glaze",
+          "ingredients": [
+            { "value": 4, "measurement": "oz", "name": "cream cheese, room temperature" },
+            { "value": 2, "measurement": "tbsp", "name": "butter, room temperature" },
+            { "value": 1, "measurement": "tsp", "name": "vanilla extract" },
+            { "value": 1, "measurement": "pinch", "name": "salt" },
+            { "value": 2, "measurement": "cups", "name": "powdered sugar" },
+            { "value": 1.5, "measurement": "tbsp", "name": "milk" }
+          ],
+          "instructions": [
+            "While the rolls are baking, combine the cream cheese, butter, vanilla and salt in a medium mixing bowl. Beat together on medium speed until smooth. Sift in the powdered sugar and beat on low speed until well combined. For a thinner consistency, beat in 1 to 2 tablespoons of milk.",
+            "When the rolls are right out of the oven, spread a third of the glaze over the hot rolls. Let cool for 5 minutes, then spread the remaining glaze on top. The rolls are best enjoyed warm but can be covered and stored at room temperature for 2 days."
+          ]
+        }
+      ],
+      "tips": [
+        "Make sure the milk temperature is between 110-120°F for proper yeast activation.",
+        "Room temperature butter spreads more easily for the filling.",
+        "Use dental floss for cleaner cuts when slicing the rolled dough.",
+        "Apply some glaze while rolls are hot for better absorption, then add remaining glaze."
+      ]
     }
   ]
 }
