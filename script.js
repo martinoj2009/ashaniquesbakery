@@ -506,28 +506,27 @@ function openRecipeModal(recipe) {
     modal.setAttribute('aria-labelledby', 'recipe-modal-title');
     modal.setAttribute('aria-modal', 'true');
 
-    // Generate sections HTML
-    const sectionsHtml = recipe.sections.map(section => `
+    // Generate ingredients sections HTML
+    const ingredientsSectionsHtml = recipe.sections.map(section => `
         <div class="recipe-section-group">
             ${recipe.sections.length > 1 ? `<h3 class="section-name">${escapeHtml(section.name)}</h3>` : ''}
+            <ul class="ingredients-list">
+                ${section.ingredients.map(ingredient => `
+                    <li>${decimalToFraction(ingredient.value)} ${escapeHtml(ingredient.measurement)} ${escapeHtml(ingredient.name)}</li>
+                `).join('')}
+            </ul>
+        </div>
+    `).join('');
 
-            <div class="recipe-section">
-                <h4>Ingredients</h4>
-                <ul class="ingredients-list">
-                    ${section.ingredients.map(ingredient => `
-                        <li>${decimalToFraction(ingredient.value)} ${escapeHtml(ingredient.measurement)} ${escapeHtml(ingredient.name)}</li>
-                    `).join('')}
-                </ul>
-            </div>
-
-            <div class="recipe-section">
-                <h4>Instructions</h4>
-                <ol class="instructions-list">
-                    ${section.instructions.map(instruction => `
-                        <li>${escapeHtml(instruction)}</li>
-                    `).join('')}
-                </ol>
-            </div>
+    // Generate instructions sections HTML
+    const instructionsSectionsHtml = recipe.sections.map(section => `
+        <div class="recipe-section-group">
+            ${recipe.sections.length > 1 ? `<h3 class="section-name">${escapeHtml(section.name)}</h3>` : ''}
+            <ol class="instructions-list">
+                ${section.instructions.map(instruction => `
+                    <li>${escapeHtml(instruction)}</li>
+                `).join('')}
+            </ol>
         </div>
     `).join('');
 
@@ -585,7 +584,15 @@ function openRecipeModal(recipe) {
                 </div>
             </div>
 
-            ${sectionsHtml}
+            <div class="recipe-section">
+                <h4>Ingredients</h4>
+                ${ingredientsSectionsHtml}
+            </div>
+
+            <div class="recipe-section">
+                <h4>Instructions</h4>
+                ${instructionsSectionsHtml}
+            </div>
 
             ${recipe.tips && recipe.tips.length > 0 ? `
                 <div class="recipe-section">
