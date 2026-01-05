@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ashanique's Bakery - Fresh homemade cakes, cupcakes, and desserts">
-    <title>Ashanique's Bakery - Fresh Homemade Cakes & Desserts</title>
+    <meta name="description" content="Ashanique's Bakery - Recipe Details">
+    <title>Recipe - Ashanique's Bakery</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,73 +20,59 @@
             <p class="bakery-tagline">Delicious Homemade Recipes & Baked Goods</p>
 
             <nav class="main-nav" role="navigation" aria-label="Main navigation">
-                <button class="nav-link active" data-section="recipes" aria-label="View recipes">
-                    Recipes
-                </button>
-                <button class="nav-link" data-section="store" aria-label="View store">
-                    Store
-                </button>
+                <a href="index.html" class="nav-link" aria-label="Back to recipes">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
+                        <path d="M8 0L0 8l8 8V0z"/>
+                    </svg>
+                    Back to Recipes
+                </a>
             </nav>
         </div>
     </header>
 
     <main>
-        <!-- Recipes Section -->
-        <section id="recipes-section" class="content-section active">
-            <div class="controls">
-                <label for="recipeSearchBar" class="sr-only">Search recipes</label>
-                <input
-                    type="text"
-                    id="recipeSearchBar"
-                    placeholder="Search recipes..."
-                    class="search-input"
-                    aria-label="Search recipes">
+        <div id="recipe-loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading recipe...</p>
+        </div>
 
-                <label for="recipeCategoryFilter" class="sr-only">Filter by category</label>
-                <select id="recipeCategoryFilter" class="sort-select" aria-label="Filter recipes by category">
-                    <option value="all">All Categories</option>
-                    <option value="Cakes">Cakes</option>
-                    <option value="Cookies">Cookies</option>
-                    <option value="Pastries">Pastries</option>
-                    <option value="Basics">Basics</option>
-                </select>
+        <div id="recipe-error" class="error-message" hidden>
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="currentColor">
+                <path d="M24 4C12.96 4 4 12.96 4 24s8.96 20 20 20 20-8.96 20-20S35.04 4 24 4zm2 30h-4v-4h4v4zm0-8h-4V14h4v12z"/>
+            </svg>
+            <p id="error-message">Recipe not found.</p>
+            <a href="index.html" class="nav-link" style="margin-top: 1rem;">Return to Recipes</a>
+        </div>
+
+        <article id="recipe-container" class="recipe-page" hidden>
+            <div class="recipe-page-content">
+                <img id="recipe-image" class="recipe-page-image" src="" alt="">
+
+                <div class="recipe-header">
+                    <h2 id="recipe-title"></h2>
+                    <div class="recipe-badges" id="recipe-badges"></div>
+                </div>
+
+                <p id="recipe-description" class="product-description"></p>
+
+                <div class="recipe-info-grid" id="recipe-info-grid"></div>
+
+                <div class="recipe-section">
+                    <h3>Ingredients</h3>
+                    <div id="recipe-ingredients"></div>
+                </div>
+
+                <div class="recipe-section">
+                    <h3>Instructions</h3>
+                    <div id="recipe-instructions"></div>
+                </div>
+
+                <div id="recipe-tips-section" class="recipe-section" hidden>
+                    <h3>Tips</h3>
+                    <ul id="recipe-tips" class="tips-list"></ul>
+                </div>
             </div>
-
-            <div id="recipe-list" class="product-grid" role="list"></div>
-
-            <div id="recipe-loading" class="loading" hidden>
-                <div class="spinner"></div>
-                <p>Loading delicious recipes...</p>
-            </div>
-        </section>
-
-        <!-- Store Section -->
-        <section id="store-section" class="content-section">
-            <div class="controls">
-                <label for="searchBar" class="sr-only">Search products</label>
-                <input
-                    type="text"
-                    id="searchBar"
-                    placeholder="Search products..."
-                    class="search-input"
-                    aria-label="Search products">
-
-                <label for="sortDropdown" class="sr-only">Sort products</label>
-                <select id="sortDropdown" class="sort-select" aria-label="Sort products">
-                    <option value="name-asc">Name (A-Z)</option>
-                    <option value="name-desc">Name (Z-A)</option>
-                    <option value="price-asc">Price (Low to High)</option>
-                    <option value="price-desc">Price (High to Low)</option>
-                </select>
-            </div>
-
-            <div id="product-list" class="product-grid" role="list"></div>
-
-            <div id="loading" class="loading" hidden>
-                <div class="spinner"></div>
-                <p>Loading delicious treats...</p>
-            </div>
-        </section>
+        </article>
     </main>
 
     <footer class="footer">
@@ -106,6 +92,6 @@
     </footer>
 
     <script src="recipeCache.js"></script>
-    <script src="script.js"></script>
+    <script src="recipe.js"></script>
 </body>
 </html>

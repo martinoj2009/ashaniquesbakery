@@ -30,25 +30,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.recipeLoading = document.getElementById('recipe-loading');
 
     try {
-        // Load products and recipes in parallel
-        const [productsResponse, recipesResponse] = await Promise.all([
+        // Load products from fetch, recipes from cache
+        const [productsResponse, recipes] = await Promise.all([
             fetch('data.json'),
-            fetch('recipes.json')
+            RecipeCache.getRecipes()
         ]);
 
-        if (!productsResponse.ok || !recipesResponse.ok) {
+        if (!productsResponse.ok) {
             throw new Error('Failed to load data');
         }
 
-        const [productsJson, recipesJson] = await Promise.all([
-            productsResponse.json(),
-            recipesResponse.json()
-        ]);
+        const productsJson = await productsResponse.json();
 
         productsData = productsJson.products;
         currentProducts = [...productsData];
 
-        recipesData = recipesJson.recipes;
+        recipesData = recipes;
         currentRecipes = [...recipesData];
 
         // Render recipes first (default section)
@@ -111,9 +108,8 @@ function setupEventListeners() {
         const card = event.target.closest('.recipe-card');
         if (card) {
             const recipeId = parseInt(card.dataset.recipeId);
-            const recipe = recipesData.find(r => r.id === recipeId);
-            if (recipe) {
-                openRecipeModal(recipe);
+            if (recipeId) {
+                window.location.href = `recipe.html?id=${recipeId}`;
             }
         }
     });
@@ -135,7 +131,10 @@ function setupEventListeners() {
             const card = event.target.closest('.recipe-card');
             if (card) {
                 event.preventDefault();
-                card.click();
+                const recipeId = parseInt(card.dataset.recipeId);
+                if (recipeId) {
+                    window.location.href = `recipe.html?id=${recipeId}`;
+                }
             }
         }
     });
@@ -498,158 +497,3 @@ function filterRecipes(event) {
     renderRecipes(currentRecipes);
 }
 
-// Open recipe modal
-function openRecipeModal(recipe) {
-    const modal = document.createElement('div');
-    modal.className = 'modal recipe-modal';
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-labelledby', 'recipe-modal-title');
-    modal.setAttribute('aria-modal', 'true');
-
-    // Generate ingredients sections HTML
-    const ingredientsSectionsHtml = recipe.sections.map(section => `
-        <div class="recipe-section-group">
-            ${recipe.sections.length > 1 ? `<h3 class="section-name">${escapeHtml(section.name)}</h3>` : ''}
-            <ul class="ingredients-list">
-                ${section.ingredients.map(ingredient => `
-                    <li>${decimalToFraction(ingredient.value)} ${escapeHtml(ingredient.measurement)} ${escapeHtml(ingredient.name)}</li>
-                `).join('')}
-            </ul>
-        </div>
-    `).join('');
-
-    // Generate instructions sections HTML
-    const instructionsSectionsHtml = recipe.sections.map(section => `
-        <div class="recipe-section-group">
-            ${recipe.sections.length > 1 ? `<h3 class="section-name">${escapeHtml(section.name)}</h3>` : ''}
-            <ol class="instructions-list">
-                ${section.instructions.map(instruction => `
-                    <li>${escapeHtml(instruction)}</li>
-                `).join('')}
-            </ol>
-        </div>
-    `).join('');
-
-    modal.innerHTML = `
-        <div class="modal-content recipe-modal-content">
-            <button class="close-button" aria-label="Close modal">×</button>
-            <img class="product-image" src="${escapeHtml(recipe.image)}" alt="${escapeHtml(recipe.name)}">
-
-            <div class="recipe-header">
-                <h2 id="recipe-modal-title">${escapeHtml(recipe.name)}</h2>
-                <div class="recipe-badges">
-                    <span class="badge ${recipe.difficulty.toLowerCase()}">${escapeHtml(recipe.difficulty)}</span>
-                    <span class="badge category">${escapeHtml(recipe.category)}</span>
-                </div>
-            </div>
-
-            <p class="product-description">${escapeHtml(recipe.description)}</p>
-
-            <div class="recipe-info-grid">
-                <div class="recipe-info-item">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 1a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm-.5 2v5l3.5 2 .5-1-3-1.75V5h-1z"/>
-                    </svg>
-                    <div>
-                        <strong>Prep Time</strong>
-                        <span>${escapeHtml(recipe.prepTime)}</span>
-                    </div>
-                </div>
-                <div class="recipe-info-item">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M4 2v16h12V2H4zm1 1h10v14H5V3zm2 2v2h6V5H7zm0 3v2h6V8H7zm0 3v2h6v-2H7z"/>
-                    </svg>
-                    <div>
-                        <strong>Cook Time</strong>
-                        <span>${escapeHtml(recipe.cookTime)}</span>
-                    </div>
-                </div>
-                <div class="recipe-info-item">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm0 1a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm-.5 2v5.5l4 2 .5-1-3.5-1.75V5h-1z"/>
-                    </svg>
-                    <div>
-                        <strong>Total Time</strong>
-                        <span>${escapeHtml(recipe.totalTime)}</span>
-                    </div>
-                </div>
-                <div class="recipe-info-item">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 5a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-3 0v-6A1.5 1.5 0 0 1 10 5zM5 6a1 1 0 0 1 1 1v5a1 1 0 0 1-2 0V7a1 1 0 0 1 1-1zm10 0a1 1 0 0 1 1 1v5a1 1 0 0 1-2 0V7a1 1 0 0 1 1-1zM3 14h14v3H3v-3z"/>
-                    </svg>
-                    <div>
-                        <strong>Servings</strong>
-                        <span>${escapeHtml(recipe.servings)}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="recipe-section">
-                <h4>Ingredients</h4>
-                ${ingredientsSectionsHtml}
-            </div>
-
-            <div class="recipe-section">
-                <h4>Instructions</h4>
-                ${instructionsSectionsHtml}
-            </div>
-
-            ${recipe.tips && recipe.tips.length > 0 ? `
-                <div class="recipe-section">
-                    <h4>Tips</h4>
-                    <ul class="tips-list">
-                        ${recipe.tips.map(tip => `
-                            <li>${escapeHtml(tip)}</li>
-                        `).join('')}
-                    </ul>
-                </div>
-            ` : ''}
-
-            <div class="modal-actions">
-                <button class="cancel-button">Close</button>
-            </div>
-        </div>
-    `;
-
-    // Show modal with animation
-    document.body.appendChild(modal);
-    requestAnimationFrame(() => {
-        modal.style.display = 'flex';
-        modal.classList.add('modal-open');
-    });
-
-    // Focus trap and close handlers
-    const closeButton = modal.querySelector('.close-button');
-    const cancelButton = modal.querySelector('.cancel-button');
-
-    // Close modal function
-    const closeModal = () => {
-        modal.classList.add('modal-closing');
-        setTimeout(() => {
-            modal.remove();
-            // Return focus to the recipe card
-            const card = document.querySelector(`[data-recipe-id="${recipe.id}"]`);
-            if (card) card.focus();
-        }, 300);
-    };
-
-    // Event listeners for closing
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    closeButton.addEventListener('click', closeModal);
-    cancelButton.addEventListener('click', closeModal);
-
-    // Escape key to close
-    const handleEscape = (e) => {
-        if (e.key === 'Escape') {
-            closeModal();
-            document.removeEventListener('keydown', handleEscape);
-        }
-    };
-    document.addEventListener('keydown', handleEscape);
-
-    // Focus the close button
-    setTimeout(() => closeButton.focus(), 100);
-}
