@@ -220,8 +220,8 @@
       "cookTime": "20 minutes",
       "totalTime": "3 hours 5 minutes",
       "servings": "12 rolls",
-      "image": "images/placeholder.svg",
-      "description": "This easy cinnamon roll recipe bakes perfectly gooey and soft rolls. Tender and fluffy dough is swirled with sweet cinnamon brown sugar and topped with sweet cream cheese icing for the best cinnamon rolls!",
+      "image": "recipes/cinnamon_rolls.png",
+      "description": "This is the no-fuss recipe for those perfectly gooey, melt-in-your-mouth cinnamon rolls you crave. We’re talking pillowy-soft dough hugging layers of sticky cinnamon brown sugar, all finished with a glorious swoosh of tangy cream cheese frosting. They really are the best.",
       "sections": [
         {
           "name": "Dough",
@@ -250,7 +250,9 @@
           "ingredients": [
             { "value": 6, "measurement": "tbsp", "name": "unsalted butter, room temperature" },
             { "value": 0.5, "measurement": "cup", "name": "light brown sugar" },
-            { "value": 1.5, "measurement": "tbsp", "name": "cinnamon" }
+            { "value": 1.5, "measurement": "tbsp", "name": "cinnamon" },
+            {"value": 1, "measurement": "tsp", "name": "nutmeg"},
+            {"value": 0.5, "measurement": "tsp", "name": "all spice"}
           ],
           "instructions": [
             "Spread the butter onto the dough in a thin and even layer, leaving a ½-inch border down one long side of the dough. (Make sure your butter is very soft! If it's still firm, microwave it in 5-second increments until easily spreadable.)",
