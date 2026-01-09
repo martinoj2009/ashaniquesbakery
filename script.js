@@ -533,17 +533,20 @@ function openRecipeModal(recipe) {
     modal.innerHTML = `
         <div class="modal-content recipe-modal-content">
             <button class="close-button" aria-label="Close modal">×</button>
-            <img class="product-image" src="${escapeHtml(recipe.image)}" alt="${escapeHtml(recipe.name)}">
 
-            <div class="recipe-header">
-                <h2 id="recipe-modal-title">${escapeHtml(recipe.name)}</h2>
-                <div class="recipe-badges">
-                    <span class="badge ${recipe.difficulty.toLowerCase()}">${escapeHtml(recipe.difficulty)}</span>
-                    <span class="badge category">${escapeHtml(recipe.category)}</span>
+            <div class="recipe-hero">
+                <img class="recipe-hero-image" src="${escapeHtml(recipe.image)}" alt="${escapeHtml(recipe.name)}">
+                <div class="recipe-hero-overlay">
+                    <h2 id="recipe-modal-title" class="recipe-hero-title">${escapeHtml(recipe.name)}</h2>
+                    <div class="recipe-badges">
+                        <span class="badge ${recipe.difficulty.toLowerCase()}">${escapeHtml(recipe.difficulty)}</span>
+                        <span class="badge category">${escapeHtml(recipe.category)}</span>
+                    </div>
                 </div>
             </div>
 
-            <p class="product-description">${escapeHtml(recipe.description)}</p>
+            <div class="recipe-content">
+                <p class="product-description">${escapeHtml(recipe.description)}</p>
 
             <div class="recipe-info-grid">
                 <div class="recipe-info-item">
@@ -605,8 +608,9 @@ function openRecipeModal(recipe) {
                 </div>
             ` : ''}
 
-            <div class="modal-actions">
-                <button class="cancel-button">Close</button>
+                <div class="modal-actions">
+                    <button class="cancel-button">Close</button>
+                </div>
             </div>
         </div>
     `;
