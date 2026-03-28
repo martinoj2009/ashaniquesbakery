@@ -902,6 +902,54 @@ main {
 }
 
 /* Print styles */
+/* Recipe share buttons */
+.recipe-share {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.recipe-share h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.recipe-share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: inherit;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+    color: #fff;
+}
+
+.share-btn:hover,
+.share-btn:focus {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+.share-btn--facebook  { background-color: #1877f2; }
+.share-btn--twitter   { background-color: #000; }
+.share-btn--pinterest { background-color: #e60023; }
+.share-btn--copy      { background-color: var(--secondary-color, #555); }
+.share-btn--copied    { background-color: #2e7d32; }
+
 @media print {
     .controls,
     .footer,

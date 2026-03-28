@@ -158,6 +158,33 @@ function displayRecipe(recipe) {
             <li>${escapeHtml(tip)}</li>
         `).join('');
     }
+
+    // Wire up share buttons
+    const pageUrl = encodeURIComponent(window.location.href);
+    const pageTitle = encodeURIComponent(`${recipe.name} - Ashanique's Bakery`);
+
+    document.getElementById('share-facebook').href =
+        `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+
+    document.getElementById('share-twitter').href =
+        `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+
+    const imageUrl = encodeURIComponent(window.location.origin + recipe.image.replace(/^\./, ''));
+    document.getElementById('share-pinterest').href =
+        `https://pinterest.com/pin/create/button/?url=${pageUrl}&media=${imageUrl}&description=${pageTitle}`;
+
+    document.getElementById('share-copy').addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            const btn = document.getElementById('share-copy');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Copied!`;
+            btn.classList.add('share-btn--copied');
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('share-btn--copied');
+            }, 2000);
+        });
+    });
 }
 
 // Show error message
