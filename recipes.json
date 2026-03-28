@@ -252,7 +252,7 @@
             { "value": 0.5, "measurement": "cup", "name": "light brown sugar" },
             { "value": 1.5, "measurement": "tbsp", "name": "cinnamon" },
             {"value": 1, "measurement": "tsp", "name": "nutmeg"},
-            {"value": 0.5, "measurement": "tsp", "name": "all spice"}
+            {"value": 0.25, "measurement": "tsp", "name": "all spice"}
           ],
           "instructions": [
             "Spread the butter onto the dough in a thin and even layer, leaving a ½-inch border down one long side of the dough. (Make sure your butter is very soft! If it's still firm, microwave it in 5-second increments until easily spreadable.)",
